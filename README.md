@@ -6,6 +6,10 @@
 ### Examples to use
 - venv/Lib/site-packages/pygame_menu/examples/game_selector.py
 
+## Dependencies
+- pygame
+- pygame-menu
+
 
 ## TODO
 - [ ] Menu flow
