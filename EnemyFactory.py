@@ -7,6 +7,7 @@ class EnemyFactory:
     # generate enemy from json file?
     @staticmethod
     def build(enemyType) -> Enemy:
+        enemyType = 1
         if enemyType == 1:
             return Alien()
         if enemyType == 2:

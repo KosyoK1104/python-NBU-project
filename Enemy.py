@@ -9,6 +9,7 @@ class Enemy(pg.sprite.Sprite):
 
     def __int__(self):
         pg.sprite.Sprite.__init__(self)
+        print('asd')
         self.facing = random.choice((-1, 1)) * Enemy.speed
         self.frame = 0
         if self.facing < 0:

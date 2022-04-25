@@ -1,13 +1,19 @@
+import time
+
 import pygame as pg
 import sys
 import random
 
 import pygame_menu
 
+from EnemyFactory import EnemyFactory
+from Alien import Alien
+from Enemy import Enemy
 from Background import Background
 
 global menu
 global screen
+global clock
 
 
 class Game:
@@ -37,9 +43,14 @@ class Game:
 
         global menu
         global screen
+        global clock
 
         pg.init()
         screen = pg.display.set_mode(self.SIZE)
+        pg.display.set_icon(pg.image.load('data/sprites/alien.PNG'))
+        pg.display.set_caption("Human vs Aliens")
+        clock = pg.time.Clock()
+
         menu = pygame_menu.Menu('Welcome', 500, 400,
                                 theme=pygame_menu.themes.THEME_DARK)
 
@@ -51,11 +62,18 @@ class Game:
     # The game
     def start_the_game(self):
         menu.disable()
+        enemies = pg.sprite.Group()
+        all = pg.sprite.RenderUpdates()
+
+        Alien.container = enemies, all
+
         stars = [
             [random.randint(0, self.SIZE[0]), random.randint(0, self.SIZE[1])]
             for x in range(100)
         ]
 
+        enemyreload = Alien.ALIEN_LOAD_TIME
+        Alien()
         while 1:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
@@ -81,4 +99,20 @@ class Game:
                     star[1] = self.SIZE[0]
                     star[0] = random.randint(0, self.SIZE[1])
             screen.blit(starColor, (0, 0))
+
+            all.clear(screen, starColor)
+
+            # update all the sprites
+            all.update()
+            if enemyreload:
+                enemyreload = enemyreload - 1
+            elif not int(random.random() * Alien.ODDS):
+                # print('asd')
+                Alien()
+                enemyreload = Alien.ALIEN_LOAD_TIME
+
+            clock.tick(60)
+            pg.display.set_caption(str("FPS: {}".format(clock.get_fps())))
+            dirty = all.draw(screen)
+            pg.display.update(dirty)
             pg.display.flip()

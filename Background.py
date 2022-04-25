@@ -1,7 +1,4 @@
-from typing import Type
-
 import pygame as pg
-from pygame import Surface
 
 
 class Background:
