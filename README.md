@@ -10,7 +10,6 @@
 - pygame
 - pygame-menu
 
-
 ## TODO
 - [ ] Menu flow
 - [ ] Start the game

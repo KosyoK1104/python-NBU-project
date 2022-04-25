@@ -4,7 +4,6 @@ import sys
 import pygame_menu
 
 from Background import Background
-from Menu import Menu
 from Score import Score
 
 global menu
@@ -13,35 +12,42 @@ global menu
 class Game:
     SIZE = width, height = 800, 600
 
-    def __init__(self, score: Score, background: Background, menu: Menu):
+    def __init__(self, score: Score, background: Background, ):
         self.score = score
         self.background = background
-        self.menu = menu
-
-    def set_difficulty(self, value, difficulty):
-        # Do the job here !
-        pass
 
     def start_the_game(self):
         menu.disable()
-        menu.full_reset()
-        menu.add.text_input('Name :', default='John Doe')
-        print('asdasd')
-        pass
+
+    def start_game_form(self):
+        start_game_form = pygame_menu.Menu('', 500, 400, theme=pygame_menu.themes.THEME_DARK)
+        start_game_form.add.text_input('Name: ', default='Player')
+        start_game_form.add.button('Start', self.start_the_game)
+        start_game_form.add.button('Return to menu', pygame_menu.events.BACK)
+        # start the game flow
+        return start_game_form
 
     def about_menu(self):
-        pass
+        about_menu = pygame_menu.Menu('About', 500, 400,
+                                      theme=pygame_menu.themes.THEME_DARK)
+        about_menu.add.label('Автори:')
+        about_menu.add.label('Симеон Попов - F100673')
+        about_menu.add.label('Констнатин Костадинов - F99557')
+        about_menu.add.vertical_margin(30)
+        about_menu.add.button('Return to menu', pygame_menu.events.BACK)
+        return about_menu
 
     def initialize(self):
 
         pg.init()
         screen = pg.display.set_mode(self.SIZE)
         global menu
+
         menu = pygame_menu.Menu('Welcome', 500, 400,
                                 theme=pygame_menu.themes.THEME_DARK)
 
-        menu.add.button('Start Game', self.start_the_game)
-        menu.add.button('About', self.about_menu)
+        menu.add.button('Start Game', self.start_game_form())
+        menu.add.button('About', self.about_menu())
         menu.add.button('Quit', pygame_menu.events.EXIT)
         menu.mainloop(screen)
 
