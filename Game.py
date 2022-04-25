@@ -17,6 +17,7 @@ class Game:
         self.background = background
 
     def start_the_game(self):
+        # start the game flow
         menu.disable()
 
     def start_game_form(self):
@@ -24,7 +25,6 @@ class Game:
         start_game_form.add.text_input('Name: ', default='Player')
         start_game_form.add.button('Start', self.start_the_game)
         start_game_form.add.button('Return to menu', pygame_menu.events.BACK)
-        # start the game flow
         return start_game_form
 
     def about_menu(self):
