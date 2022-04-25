@@ -1,19 +1,17 @@
-import pygame as pg
+# import pygame as pg
 import sys
+import pygame
+import pygame_menu
 
-if __name__ == '__main__':
-    pg.init()
+from Background import Background
+from Game import Game
+from Menu import Menu
+from Score import Score
 
-    size = width, height = 800, 600
-    speed = [1, 1]
-    black = 0, 0, 0
+background = Background()
+score = Score()
+menu = Menu()
 
-    screen = pg.display.set_mode(size)
+game = Game(score, background, menu)
 
-
-    while 1:
-        for event in pg.event.get():
-            if event.type == pg.QUIT: sys.exit()
-
-        screen.fill(black)
-        pg.display.flip()
+game.initialize()
