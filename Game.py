@@ -1,24 +1,20 @@
 import pygame as pg
 import sys
+import random
 
 import pygame_menu
 
 from Background import Background
-from Score import Score
 
 global menu
+global screen
 
 
 class Game:
     SIZE = width, height = 800, 600
 
-    def __init__(self, score: Score, background: Background, ):
-        self.score = score
+    def __init__(self, background: Background, ):
         self.background = background
-
-    def start_the_game(self):
-        # start the game flow
-        menu.disable()
 
     def start_game_form(self):
         start_game_form = pygame_menu.Menu('', 500, 400, theme=pygame_menu.themes.THEME_DARK)
@@ -39,10 +35,11 @@ class Game:
 
     def initialize(self):
 
+        global menu
+        global screen
+
         pg.init()
         screen = pg.display.set_mode(self.SIZE)
-        global menu
-
         menu = pygame_menu.Menu('Welcome', 500, 400,
                                 theme=pygame_menu.themes.THEME_DARK)
 
@@ -51,9 +48,37 @@ class Game:
         menu.add.button('Quit', pygame_menu.events.EXIT)
         menu.mainloop(screen)
 
+    # The game
+    def start_the_game(self):
+        menu.disable()
+        stars = [
+            [random.randint(0, self.SIZE[0]), random.randint(0, self.SIZE[1])]
+            for x in range(100)
+        ]
+
         while 1:
             for event in pg.event.get():
-                if event.type == pg.QUIT: sys.exit()
-
+                if event.type == pg.QUIT:
+                    sys.exit()
             screen.fill(self.background.BACKGROUND_COLOR)
+            screen.blit(self.background.getRandomBackground(), (0, 0))
+            starColor = pg.Surface(screen.get_size())
+            starColor = starColor.convert()
+            starColor.fill((0, 0, 0))
+            #
+            # for star in stars:
+            #     pg.draw.line(starColor,
+            #                  (255, 255, 255), (star[0], star[1]), (star[0], star[1]))
+            #     star[1] = star[1] + 1
+            #     if star[1] < 0:
+            #         star[0] = random.randint(0, self.SIZE[0])
+            #         star[1] = self.SIZE[1]
+            for star in stars:
+                pg.draw.line(starColor,
+                             (255, 255, 255), (star[0], star[1]), (star[0], star[1]))
+                star[1] = star[1] + 1
+                if star[1] < 0:
+                    star[1] = self.SIZE[0]
+                    star[0] = random.randint(0, self.SIZE[1])
+            screen.blit(starColor, (0, 0))
             pg.display.flip()
