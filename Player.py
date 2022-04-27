@@ -1,5 +1,7 @@
 import pygame as pg
 
+import Game
+
 
 class Player(pg.sprite.Sprite):
     DAMAGE = 30
@@ -9,11 +11,12 @@ class Player(pg.sprite.Sprite):
     # the delay will be in seconds
     BULLET_DELAY = 1
     print("Player class loaded")
+    PLAYER_DIMENSIONS = Width, Height = 80, 80
 
     def __init__(self):
         pg.sprite.Sprite.__init__(self)
         self.image = pg.image.load("data/sprites/player.png")
-        self.image = pg.transform.scale(self.image, (80, 80))
+        self.image = pg.transform.scale(self.image, (Player.PLAYER_DIMENSIONS[0], Player.PLAYER_DIMENSIONS[1]))
         self.rect = self.image.get_rect()
         self.rect.x = 360
         self.rect.y = 500
@@ -25,5 +28,10 @@ class Player(pg.sprite.Sprite):
     # the function will take the player's current position and the event of the key pressed
     # the key could be w, a, s, d, or the arrow keys , and the player will move in that direction
     def event_handler(self, keys):
-        self.rect.x += ((keys[pg.K_RIGHT] or keys[pg.K_d]) - (keys[pg.K_LEFT] or keys[pg.K_a])) * self.speed
-        self.rect.y += ((keys[pg.K_DOWN] or keys[pg.K_s]) - (keys[pg.K_UP] or keys[pg.K_w])) * self.speed
+        tmp_x = ((keys[pg.K_RIGHT] or keys[pg.K_d]) - (keys[pg.K_LEFT] or keys[pg.K_a])) * self.speed
+        if 0 < self.rect.x + tmp_x < Game.Game.SIZE[0]-Player.PLAYER_DIMENSIONS[0]:
+            self.rect.x += tmp_x
+
+        tmp_y = ((keys[pg.K_DOWN] or keys[pg.K_s]) - (keys[pg.K_UP] or keys[pg.K_w])) * self.speed
+        if 0 < self.rect.y + tmp_y < Game.Game.SIZE[1]-Player.PLAYER_DIMENSIONS[1]:
+            self.rect.y += tmp_y
