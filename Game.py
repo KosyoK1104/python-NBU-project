@@ -105,12 +105,9 @@ class Game:
             # draw the players (for now only one)
             player_list.draw(screen)
 
-            # listen for events which are buttons which are pressed and pass them to the player function to handle them
-            for event in pg.event.get():
-                if event.type == pg.QUIT:
-                    sys.exit()
-                elif event.type == pg.KEYDOWN:
-                    player.move(event)
+            # listens to the events and passes them to the player movement handler
+            keys = pg.key.get_pressed()
+            player.move(keys)
 
             # update all the sprites
             all.update()

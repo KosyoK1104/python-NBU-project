@@ -21,15 +21,9 @@ class Player(pg.sprite.Sprite):
     # create a function to move the player
     # the function will take the player's current position and the event of the key pressed
     # the key could be w, a, s, d, or the arrow keys , and the player will move in that direction
-    def move(self, event):
-        if event.key == pg.K_w or event.key == pg.K_UP:
-            self.rect.y -= self.speed
-        if event.key == pg.K_s or event.key == pg.K_DOWN:
-            self.rect.y += self.speed
-        if event.key == pg.K_a or event.key == pg.K_LEFT:
-            self.rect.x -= self.speed
-        if event.key == pg.K_d or event.key == pg.K_RIGHT:
-            self.rect.x += self.speed
+    def move(self, keys):
+        self.rect.x += (keys[pg.K_RIGHT] - keys[pg.K_LEFT]) * self.speed
+        self.rect.y += (keys[pg.K_DOWN] - keys[pg.K_UP]) * self.speed
 
     def attack(self, event):
         print("Player attacked")
