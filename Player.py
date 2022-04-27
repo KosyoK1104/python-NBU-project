@@ -20,7 +20,6 @@ class Player(pg.sprite.Sprite):
         self.health = 100
         self.attack = Player.DAMAGE
         self.speed = Player.SPEED
-        self.shoot_bullet()
 
     # create a function to move the player
     # the function will take the player's current position and the event of the key pressed
