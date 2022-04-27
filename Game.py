@@ -10,6 +10,7 @@ from EnemyFactory import EnemyFactory
 from Alien import Alien
 from Enemy import Enemy
 from Background import Background
+from Player import Player
 
 global menu
 global screen
@@ -74,6 +75,10 @@ class Game:
 
         enemyreload = Alien.ALIEN_LOAD_TIME
         Alien()
+
+        player = Player()  # spawn player
+        player_list = pg.sprite.Group()
+        player_list.add(player)
         while 1:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
@@ -95,8 +100,10 @@ class Game:
                     star[1] = 0
 
             screen.blit(starColor, (0, 0))
-
             all.clear(screen, starColor)
+
+            # draw the players (for now only one)
+            player_list.draw(screen)
 
             # update all the sprites
             all.update()
