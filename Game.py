@@ -83,21 +83,17 @@ class Game:
             starColor = pg.Surface(screen.get_size())
             starColor = starColor.convert()
             starColor.fill((0, 0, 0))
-            #
-            # for star in stars:
-            #     pg.draw.line(starColor,
-            #                  (255, 255, 255), (star[0], star[1]), (star[0], star[1]))
-            #     star[1] = star[1] + 1
-            #     if star[1] < 0:
-            #         star[0] = random.randint(0, self.SIZE[0])
-            #         star[1] = self.SIZE[1]
+
+            # Draw stars
             for star in stars:
                 pg.draw.line(starColor,
                              (255, 255, 255), (star[0], star[1]), (star[0], star[1]))
                 star[1] = star[1] + 1
-                if star[1] < 0:
-                    star[1] = self.SIZE[0]
-                    star[0] = random.randint(0, self.SIZE[1])
+            # if the star is out of the screen, we put it back to the top
+                if star[1] > self.SIZE[1]:
+                    star[0] = random.randint(0, self.SIZE[0])
+                    star[1] = 0
+
             screen.blit(starColor, (0, 0))
 
             all.clear(screen, starColor)
