@@ -68,6 +68,7 @@ class Game:
 
         Alien.container = enemies, all
 
+        # Generate random coordinates for the background stars
         stars = [
             [random.randint(0, self.SIZE[0]), random.randint(0, self.SIZE[1])]
             for x in range(100)
@@ -76,9 +77,12 @@ class Game:
         enemyreload = Alien.ALIEN_LOAD_TIME
         Alien()
 
-        player = Player()  # spawn player
+        # Spawning the player
+        player = Player()
         player_list = pg.sprite.Group()
         player_list.add(player)
+
+        # Game loop
         while 1:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
@@ -102,12 +106,12 @@ class Game:
             screen.blit(starColor, (0, 0))
             all.clear(screen, starColor)
 
-            # draw the players (for now only one)
+            # DRAW the players (for now only one)
             player_list.draw(screen)
 
-            # listens to the events and passes them to the player movement handler
+            # listens to the events and passes them to the player event handler
             keys = pg.key.get_pressed()
-            player.move(keys)
+            player.event_handler(keys)
 
             # update all the sprites
             all.update()
@@ -118,8 +122,10 @@ class Game:
                 Alien()
                 enemyreload = Alien.ALIEN_LOAD_TIME
 
+            # shows fps in the title bar
             clock.tick(60)
             pg.display.set_caption(str("FPS: {}".format(clock.get_fps())))
+
             dirty = all.draw(screen)
             pg.display.update(dirty)
             pg.display.flip()

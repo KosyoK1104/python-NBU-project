@@ -3,8 +3,11 @@ import pygame as pg
 
 class Player(pg.sprite.Sprite):
     DAMAGE = 30
-    SPEED = 10
+    SPEED = 5
     MAX_HEALTH = 100
+    BULLET_SPEED = 10
+    # the delay will be in seconds
+    BULLET_DELAY = 1
     print("Player class loaded")
 
     def __init__(self):
@@ -17,13 +20,16 @@ class Player(pg.sprite.Sprite):
         self.health = 100
         self.attack = Player.DAMAGE
         self.speed = Player.SPEED
+        self.shoot_bullet()
 
     # create a function to move the player
     # the function will take the player's current position and the event of the key pressed
     # the key could be w, a, s, d, or the arrow keys , and the player will move in that direction
-    def move(self, keys):
-        self.rect.x += (keys[pg.K_RIGHT] - keys[pg.K_LEFT]) * self.speed
-        self.rect.y += (keys[pg.K_DOWN] - keys[pg.K_UP]) * self.speed
+    def event_handler(self, keys):
+        self.rect.x += ((keys[pg.K_RIGHT] or keys[pg.K_d]) - (keys[pg.K_LEFT] or keys[pg.K_a])) * self.speed
+        self.rect.y += ((keys[pg.K_DOWN] or keys[pg.K_s]) - (keys[pg.K_UP] or keys[pg.K_w])) * self.speed
+        if keys[pg.K_SPACE]:
+            self.shoot_bullet()
 
-    def attack(self, event):
-        print("Player attacked")
+    def shoot_bullet(self):
+        print("Player shoot bullet")
