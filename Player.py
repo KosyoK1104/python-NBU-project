@@ -28,8 +28,3 @@ class Player(pg.sprite.Sprite):
     def event_handler(self, keys):
         self.rect.x += ((keys[pg.K_RIGHT] or keys[pg.K_d]) - (keys[pg.K_LEFT] or keys[pg.K_a])) * self.speed
         self.rect.y += ((keys[pg.K_DOWN] or keys[pg.K_s]) - (keys[pg.K_UP] or keys[pg.K_w])) * self.speed
-        if keys[pg.K_SPACE]:
-            self.shoot_bullet()
-
-    def shoot_bullet(self):
-        print("Player shoot bullet")
