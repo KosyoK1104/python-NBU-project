@@ -11,5 +11,3 @@ class Background:
     def getRandomBackground(self) -> pg.Surface:
         # return image
         return pg.image.load('data/sprites/bg.png')
-
-

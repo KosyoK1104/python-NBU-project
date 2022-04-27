@@ -84,9 +84,12 @@ class Game:
 
         # Game loop
         while 1:
+            # Event handling for EXIT
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     sys.exit()
+
+            # Stars background animation
             screen.fill(self.background.BACKGROUND_COLOR)
             screen.blit(self.background.getRandomBackground(), (0, 0))
             starColor = pg.Surface(screen.get_size())
@@ -98,6 +101,7 @@ class Game:
                 pg.draw.line(starColor,
                              (255, 255, 255), (star[0], star[1]), (star[0], star[1]))
                 star[1] = star[1] + 1
+
             # if the star is out of the screen, we put it back to the top
                 if star[1] > self.SIZE[1]:
                     star[0] = random.randint(0, self.SIZE[0])
