@@ -14,3 +14,7 @@ class EnemyFactory:
             return Boss()
         # throw exception?
         return Enemy()
+
+    @staticmethod
+    def newAlien() -> Alien:
+        return Alien()

@@ -1,6 +1,8 @@
+import math
 import time
 
 import pygame as pg
+import pygame.freetype as freetype
 import sys
 import random
 
@@ -74,20 +76,18 @@ class Game:
         menu.disable()
 
         # intro animation
-        self.intro()
+        #self.intro()
         enemies = pg.sprite.Group()
         all = pg.sprite.RenderUpdates()
-
-        Alien.container = enemies, all
 
         # Generate random coordinates for the background stars
         stars = [
             [random.randint(0, self.SIZE[0]), random.randint(0, self.SIZE[1])]
             for x in range(100)
         ]
-
-        enemyreload = Alien.ALIEN_LOAD_TIME
-        Alien()
+        # Aliens
+        enemy_reload = Alien.ALIEN_LOAD_TIME
+        enemies.add(EnemyFactory.newAlien())
 
         # Spawning the player
         player = Player()
@@ -100,6 +100,15 @@ class Game:
         # this flag is used to check if the player stops to shoot
         flag_key_up = True
 
+        # Lost game Flag
+        lost_game = False
+        kills = 0
+
+        pg.font.init()  # you have to call this at the start,
+        # if you want to use this module.
+        font = freetype.Font("data/Font.ttf", 24)
+
+        time_points = math.ceil(time.time())
         # Game loop
         while 1:
             # Event handling for EXIT
@@ -129,7 +138,10 @@ class Game:
             all.clear(screen, starColor)
 
             # DRAW the players (for now only one)
-            player_list.draw(screen)
+            player.draw(screen)
+
+            # Draw Aliens
+            enemies.draw(screen)
 
             # listens to the events and passes them to the player event handler
             keys = pg.key.get_pressed()
@@ -157,12 +169,42 @@ class Game:
 
             # update all the sprites
             all.update()
-            if enemyreload:
-                enemyreload = enemyreload - 1
+
+            # Spawn new Enemies
+            if enemy_reload:
+                enemy_reload = enemy_reload - 1
             elif not int(random.random() * Alien.ODDS):
-                # print('asd')
-                Alien()
-                enemyreload = Alien.ALIEN_LOAD_TIME
+                enemies.add(EnemyFactory.newAlien())
+                enemy_reload = Alien.ALIEN_LOAD_TIME
+
+            for enemy in enemies:
+                enemy.move()
+
+                if enemy.rect.colliderect(player):
+                    enemies.remove(enemy)
+                    player.health -= 10
+
+                if enemy.rect.y + enemy.get_height() > self.SIZE[1]:
+                    enemies.remove(enemy)
+
+                for bullet in bullet_list:
+                    if enemy.rect.colliderect(bullet):
+                        enemies.remove(enemy)
+                        bullet_list.remove(bullet)
+                        kills += 10
+
+            if player.health > 30:
+                font.render_to(screen, (5, 600-24), "Health: " + str(player.health), (0, 204, 0))
+            else:
+                font.render_to(screen, (5, 600-24), "Health: " + str(player.health), (255, 51, 51))
+
+            if player.health == 0:
+                lost_game = True
+
+            font.render_to(screen, (5, 0), "Points: " + str(kills + math.ceil(time.time()) - time_points), (255, 255, 255))
+
+            if lost_game:
+                self.initialize()
 
             # shows fps in the title bar
             clock.tick(60)

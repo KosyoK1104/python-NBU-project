@@ -39,3 +39,6 @@ class Player(pg.sprite.Sprite):
         # print("Bullet shot")
         # create a bullet object with name bullet
         return Bullet.Bullet(self.rect.x + 15, self.rect.y, self.BULLET_SPEED)
+
+    def draw(self, screen):
+        screen.blit(self.image, self.rect)
