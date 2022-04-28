@@ -61,8 +61,9 @@ class Game:
         menu.mainloop(screen)
 
     def intro(self):
-        for i in range(0, 254):
-            image_animation = pg.image.load('data/Gif_Animation/frame_' + str(i) + '_delay-0.05s.jpeg')
+        # the last frame is 254
+        for i in range(0, 247):
+            image_animation = pg.image.load('data/Gif_Animation/frame_' + str(i) + '_delay-0.05s.jpg')
             image_animation = pg.transform.scale(image_animation, (Game.SIZE[0], Game.SIZE[1]))
             screen.blit(image_animation, (0, 0))
             pg.display.update()
