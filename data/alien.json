@@ -1,0 +1,20 @@
+{
+  "type": "AlienData",
+  "version": "1.0.0",
+  "data": {
+    "1": [
+      {
+        "sprite": "data/sprites/alien.PNG",
+        "level": 1
+      },
+      {
+        "sprite": "data/sprites/Beholder.png",
+        "level": 1
+      },
+      {
+        "sprite": "data/sprites/Emissary.png",
+        "level": 1
+      }
+    ]
+  }
+}

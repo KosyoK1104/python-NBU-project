@@ -87,7 +87,7 @@ class Game:
         ]
         # Aliens
         enemy_reload = Alien.ALIEN_LOAD_TIME
-        enemies.add(EnemyFactory.newAlien())
+        enemies.add(EnemyFactory.build(1, 1))
 
         # Spawning the player
         player = Player()
@@ -174,7 +174,7 @@ class Game:
             if enemy_reload:
                 enemy_reload = enemy_reload - 1
             elif not int(random.random() * Alien.ODDS):
-                enemies.add(EnemyFactory.newAlien())
+                enemies.add(EnemyFactory.build(1, 1))
                 enemy_reload = Alien.ALIEN_LOAD_TIME
 
             for enemy in enemies:

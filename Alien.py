@@ -11,9 +11,9 @@ class Alien(Enemy):
     ALIEN_LOAD_TIME = 60
     ALIEN_DIMENSIONS = Width, Height = 80, 80
 
-    def __init__(self):
+    def __init__(self, sprite):
         Enemy.__init__(self)
-        self.image = pg.image.load("data/sprites/alien.PNG")
+        self.image = pg.image.load(sprite)
         self.image = pg.transform.scale(self.image, (self.ALIEN_DIMENSIONS[0], self.ALIEN_DIMENSIONS[1]))
         self.rect = self.image.get_rect()
         self.rect.x = random.randint(0, 720)
