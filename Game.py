@@ -60,9 +60,20 @@ class Game:
         menu.add.button('Quit', pygame_menu.events.EXIT)
         menu.mainloop(screen)
 
+    def intro(self):
+        for i in range(0, 254):
+            image_animation = pg.image.load('data/Gif_Animation/frame_' + str(i) + '_delay-0.05s.jpeg')
+            image_animation = pg.transform.scale(image_animation, (Game.SIZE[0], Game.SIZE[1]))
+            screen.blit(image_animation, (0, 0))
+            pg.display.update()
+            clock.tick(30)
+
     # The game
     def start_the_game(self):
         menu.disable()
+
+        # intro animation
+        self.intro()
         enemies = pg.sprite.Group()
         all = pg.sprite.RenderUpdates()
 
