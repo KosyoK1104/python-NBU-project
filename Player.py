@@ -1,6 +1,7 @@
 import pygame as pg
-
+import time
 import Game
+import Bullet
 
 
 class Player(pg.sprite.Sprite):
@@ -8,8 +9,6 @@ class Player(pg.sprite.Sprite):
     SPEED = 5
     MAX_HEALTH = 100
     BULLET_SPEED = 10
-    # the delay will be in seconds
-    BULLET_DELAY = 1
     print("Player class loaded")
     PLAYER_DIMENSIONS = Width, Height = 80, 80
 
@@ -35,3 +34,8 @@ class Player(pg.sprite.Sprite):
         tmp_y = ((keys[pg.K_DOWN] or keys[pg.K_s]) - (keys[pg.K_UP] or keys[pg.K_w])) * self.speed
         if 0 < self.rect.y + tmp_y < Game.Game.SIZE[1]-Player.PLAYER_DIMENSIONS[1]:
             self.rect.y += tmp_y
+
+    def shoot(self) -> Bullet.Bullet:
+        # print("Bullet shot")
+        # create a bullet object with name bullet
+        return Bullet.Bullet(self.rect.x + 15, self.rect.y, self.BULLET_SPEED)

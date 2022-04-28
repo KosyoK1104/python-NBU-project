@@ -94,6 +94,12 @@ class Game:
         player_list = pg.sprite.Group()
         player_list.add(player)
 
+        # creating a list of bullets
+        bullet_list = pg.sprite.Group()
+
+        # this flag is used to check if the player stops to shoot
+        flag_key_up = True
+
         # Game loop
         while 1:
             # Event handling for EXIT
@@ -128,6 +134,26 @@ class Game:
             # listens to the events and passes them to the player event handler
             keys = pg.key.get_pressed()
             player.event_handler(keys)
+
+            # listens for the player to shoot < - THIS WORKS BUT NOT CONTROLLABLE
+            if keys[pg.K_SPACE]:
+                if flag_key_up:
+                    fired_bullet = player.shoot()
+                    bullet_list.add(fired_bullet)
+                    flag_key_up = False
+            # if the player stops shooting, we set the flag to true
+            else:
+                flag_key_up = True
+
+            # DRAW the bullets
+            bullet_list.draw(screen)
+
+            # Increment every bullet position and remove the ones that are out of the screen
+            for bullet in bullet_list:
+                bullet.move()
+                if bullet.rect.y < 0:
+                    # print("Bullet out of screen")
+                    bullet_list.remove(bullet)
 
             # update all the sprites
             all.update()
