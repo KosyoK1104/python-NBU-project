@@ -14,6 +14,7 @@ from Enemy import Enemy
 from Background import Background
 from Player import Player
 from Healthbar import Healthbar
+from Explosion import Explosion
 
 global menu
 global screen
@@ -63,7 +64,8 @@ class Game:
         menu.add.button('Quit', pygame_menu.events.EXIT)
         menu.mainloop(screen)
 
-    def exit_game(self):
+    @staticmethod
+    def exit_game():
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 sys.exit()
@@ -107,6 +109,9 @@ class Game:
         # creating a list of bullets
         bullet_list = pg.sprite.Group()
 
+        # creating a list of explosions
+        explosion_list = pg.sprite.Group()
+
         # this flag is used to check if the player stops to shoot
         flag_key_up = True
 
@@ -145,6 +150,9 @@ class Game:
             # DRAW the players (for now only one)
             player.draw(screen)
 
+            # Update the healthbar
+            healthbar.update(player)
+
             # DRAW healthbar
             healthbar.draw(screen)
 
@@ -168,6 +176,9 @@ class Game:
             # DRAW the bullets
             bullet_list.draw(screen)
 
+            # DRAW the explosions
+            explosion_list.draw(screen)
+
             # Increment every bullet position and remove the ones that are out of the screen
             for bullet in bullet_list:
                 bullet.move()
@@ -189,6 +200,7 @@ class Game:
                 enemy.move()
 
                 if enemy.rect.colliderect(player):
+                    explosion_list.add(Explosion(enemy))
                     enemies.remove(enemy)
                     player.health -= 1
 
@@ -197,16 +209,19 @@ class Game:
 
                 for bullet in bullet_list:
                     if enemy.rect.colliderect(bullet):
+                        explosion_list.add(Explosion(enemy))
                         enemies.remove(enemy)
                         bullet_list.remove(bullet)
                         player.kill_count += 10
 
-            # Update the healthbar
-            healthbar.update(player)
-
             # if player is DEAD start new game
             if player.health == 0:
+                explosion_list.add(Explosion(player))
                 self.initialize()
+
+            # update every explosion
+            for explosions in explosion_list:
+                explosions.update()
 
             font.render_to(screen, (5, 30), "Points: " + str(player.kill_count + math.ceil(time.time()) - time_points), (255, 255, 255))
 

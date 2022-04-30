@@ -3,7 +3,7 @@ import Game
 
 
 class Healthbar(pg.sprite.Sprite):
-    HEALTHBAR_DIMENSIONS = (250,35 )
+    HEALTHBAR_DIMENSIONS = (250, 35)
 
     def __init__(self):
         pg.sprite.Sprite.__init__(self)
@@ -21,7 +21,6 @@ class Healthbar(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = -10
         self.rect.y = -4
-
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
