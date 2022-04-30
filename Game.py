@@ -8,6 +8,7 @@ import random
 
 import pygame_menu
 
+from Score import Score
 from EnemyFactory import EnemyFactory
 from Alien import Alien
 from Enemy import Enemy
@@ -23,13 +24,14 @@ global clock
 
 class Game:
     SIZE = width, height = 800, 600
+    Player_name = "Player"
 
     def __init__(self, background: Background, ):
         self.background = background
 
     def start_game_form(self):
         start_game_form = pygame_menu.Menu('', 500, 400, theme=pygame_menu.themes.THEME_DARK)
-        start_game_form.add.text_input('Name: ', default='Player')
+        Game.Player_name = start_game_form.add.text_input('Name: ', default='Player')
         start_game_form.add.button('Start', self.start_the_game)
         start_game_form.add.button('Return to menu', pygame_menu.events.BACK)
         return start_game_form
@@ -215,6 +217,9 @@ class Game:
             # if player is DEAD start new game
             if player.health == 0:
                 explosion_list.add(Explosion(player))
+                # SCOREBOARD DOESN'T WORK PROPPERLY !!!
+                # score = Score(Game.Player_name, player.kill_count + math.ceil(time.time()) - time_points)
+                # score.write()
                 self.initialize()
 
             # update every explosion
