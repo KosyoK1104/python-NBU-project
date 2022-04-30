@@ -22,6 +22,7 @@ class Healthbar(pg.sprite.Sprite):
         self.rect.x = -10
         self.rect.y = -4
 
+
     def draw(self, screen):
         screen.blit(self.image, self.rect)
 
