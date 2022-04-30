@@ -17,7 +17,14 @@ class Bullet(pg.sprite.Sprite):
         self.rect.y = y
         self.BULLET_SPEED = bullet_speed
 
-    def move(self):
+    def update(self):
         self.rect.y -= self.BULLET_SPEED
+        if self.rect.y < 0:
+            self.kill()
+
+    def kill(self) -> None:
+        pg.sprite.Sprite.kill(self)
+
+
 
 

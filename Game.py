@@ -86,6 +86,7 @@ class Game:
 
         # intro animation
         # self.intro()
+
         enemies = pg.sprite.Group()
         all = pg.sprite.RenderUpdates()
 
@@ -181,10 +182,7 @@ class Game:
 
             # Increment every bullet position and remove the ones that are out of the screen
             for bullet in bullet_list:
-                bullet.move()
-                if bullet.rect.y < 0:
-                    # print("Bullet out of screen")
-                    bullet_list.remove(bullet)
+                bullet.update()
 
             # update all the sprites
             all.update()
