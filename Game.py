@@ -70,6 +70,9 @@ class Game:
             screen.blit(image_animation, (0, 0))
             pg.display.update()
             clock.tick(30)
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    sys.exit()
 
     # The game
     def start_the_game(self):
