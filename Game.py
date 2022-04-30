@@ -76,7 +76,7 @@ class Game:
         menu.disable()
 
         # intro animation
-        #self.intro()
+        self.intro()
         enemies = pg.sprite.Group()
         all = pg.sprite.RenderUpdates()
 
@@ -99,10 +99,6 @@ class Game:
 
         # this flag is used to check if the player stops to shoot
         flag_key_up = True
-
-        # Lost game Flag
-        lost_game = False
-        kills = 0
 
         pg.font.init()  # you have to call this at the start,
         # if you want to use this module.
@@ -191,20 +187,18 @@ class Game:
                     if enemy.rect.colliderect(bullet):
                         enemies.remove(enemy)
                         bullet_list.remove(bullet)
-                        kills += 10
+                        player.kill_count += 10
 
             if player.health > 30:
                 font.render_to(screen, (5, 600-24), "Health: " + str(player.health), (0, 204, 0))
             else:
                 font.render_to(screen, (5, 600-24), "Health: " + str(player.health), (255, 51, 51))
 
+            # if player is dead flag for dead is set to true
             if player.health == 0:
-                lost_game = True
-
-            font.render_to(screen, (5, 0), "Points: " + str(kills + math.ceil(time.time()) - time_points), (255, 255, 255))
-
-            if lost_game:
                 self.initialize()
+
+            font.render_to(screen, (5, 0), "Points: " + str(player.kill_count + math.ceil(time.time()) - time_points), (255, 255, 255))
 
             # shows fps in the title bar
             clock.tick(60)
