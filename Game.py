@@ -13,6 +13,7 @@ from Alien import Alien
 from Enemy import Enemy
 from Background import Background
 from Player import Player
+from Healthbar import Healthbar
 
 global menu
 global screen
@@ -82,7 +83,7 @@ class Game:
         menu.disable()
 
         # intro animation
-        self.intro()
+        # self.intro()
         enemies = pg.sprite.Group()
         all = pg.sprite.RenderUpdates()
 
@@ -100,15 +101,19 @@ class Game:
         player_list = pg.sprite.Group()
         player_list.add(player)
 
+        # Creating a healthbar
+        healthbar = Healthbar()
+
         # creating a list of bullets
         bullet_list = pg.sprite.Group()
 
         # this flag is used to check if the player stops to shoot
         flag_key_up = True
 
-        pg.font.init()  # you have to call this at the start,
-        # if you want to use this module.
-        font = freetype.Font("data/Font.ttf", 24)
+        # you have to call this at the start to init the font,
+        pg.font.init()
+        # get data for Font
+        font = freetype.Font("data/Font.ttf", 20)
 
         time_points = math.ceil(time.time())
         # Game loop
@@ -139,6 +144,9 @@ class Game:
 
             # DRAW the players (for now only one)
             player.draw(screen)
+
+            # DRAW healthbar
+            healthbar.draw(screen)
 
             # Draw Aliens
             enemies.draw(screen)
@@ -182,7 +190,7 @@ class Game:
 
                 if enemy.rect.colliderect(player):
                     enemies.remove(enemy)
-                    player.health -= 10
+                    player.health -= 1
 
                 if enemy.rect.y + enemy.get_height() > self.SIZE[1]:
                     enemies.remove(enemy)
@@ -193,16 +201,14 @@ class Game:
                         bullet_list.remove(bullet)
                         player.kill_count += 10
 
-            if player.health > 30:
-                font.render_to(screen, (5, 600-24), "Health: " + str(player.health), (0, 204, 0))
-            else:
-                font.render_to(screen, (5, 600-24), "Health: " + str(player.health), (255, 51, 51))
+            # Update the healthbar
+            healthbar.update(player)
 
-            # if player is dead flag for dead is set to true
+            # if player is DEAD start new game
             if player.health == 0:
                 self.initialize()
 
-            font.render_to(screen, (5, 0), "Points: " + str(player.kill_count + math.ceil(time.time()) - time_points), (255, 255, 255))
+            font.render_to(screen, (5, 30), "Points: " + str(player.kill_count + math.ceil(time.time()) - time_points), (255, 255, 255))
 
             # shows fps in the title bar
             clock.tick(60)
