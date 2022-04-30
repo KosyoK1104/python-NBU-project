@@ -62,6 +62,11 @@ class Game:
         menu.add.button('Quit', pygame_menu.events.EXIT)
         menu.mainloop(screen)
 
+    def exit_game(self):
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                sys.exit()
+
     def intro(self):
         # the last frame is 254
         for i in range(0, 247):
@@ -70,9 +75,7 @@ class Game:
             screen.blit(image_animation, (0, 0))
             pg.display.update()
             clock.tick(30)
-            for event in pg.event.get():
-                if event.type == pg.QUIT:
-                    sys.exit()
+            self.exit_game()
 
     # The game
     def start_the_game(self):
@@ -111,9 +114,7 @@ class Game:
         # Game loop
         while 1:
             # Event handling for EXIT
-            for event in pg.event.get():
-                if event.type == pg.QUIT:
-                    sys.exit()
+            self.exit_game()
 
             # Stars background animation
             screen.fill(self.background.BACKGROUND_COLOR)
