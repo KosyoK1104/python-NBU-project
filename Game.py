@@ -217,7 +217,7 @@ class Game:
             # if player is DEAD start new game
             if player.health == 0:
                 explosion_list.add(Explosion(player))
-                # SCOREBOARD DOESN'T WORK PROPPERLY !!!
+                # SCOREBOARD DOESN'T WORK PROPPERLY !!! DONT USE IT
                 # score = Score(Game.Player_name, player.kill_count + math.ceil(time.time()) - time_points)
                 # score.write()
                 self.initialize()
