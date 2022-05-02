@@ -24,17 +24,20 @@ global clock
 
 class Game:
     SIZE = width, height = 800, 600
-    Player_name = "Player"
+    PLAYER_NAME = "Player"
 
     def __init__(self, background: Background, ):
         self.background = background
 
     def start_game_form(self):
         start_game_form = pygame_menu.Menu('', 500, 400, theme=pygame_menu.themes.THEME_DARK)
-        Game.Player_name = start_game_form.add.text_input('Name: ', default='Player')
+        start_game_form.add.text_input('Name: ', default='Player', onchange=self.set_player_name)
         start_game_form.add.button('Start', self.start_the_game)
         start_game_form.add.button('Return to menu', pygame_menu.events.BACK)
         return start_game_form
+
+    def set_player_name(self, name):
+        self.PLAYER_NAME = name
 
     def about_menu(self):
         about_menu = pygame_menu.Menu('About', 500, 400,
@@ -218,8 +221,8 @@ class Game:
             if player.health == 0:
                 explosion_list.add(Explosion(player))
                 # SCOREBOARD DOESN'T WORK PROPPERLY !!! DONT USE IT
-                # score = Score(Game.Player_name, player.kill_count + math.ceil(time.time()) - time_points)
-                # score.write()
+                score = Score(Game.PLAYER_NAME, player.kill_count + math.ceil(time.time()) - time_points)
+                score.save()
                 self.initialize()
 
             # update every explosion

@@ -10,14 +10,17 @@ class Score:
         self.score = score
         self.date = datetime.date(datetime.now())
 
-    def __str__(self):
-        return self.name + " " + str(self.score) + " " + str(self.date)
+    def __str__(self) -> str:
+        return f"{self.name} {self.score} {self.date}"
 
-    def write(self):
-        # this DOESN'T WORK BECAUSE OF SELF.NAME
-        new_score = {"name": self.name, "score": int(self.score), "date": str(self.date)}
-        json_string = json.dumps(new_score)
-        json_file = open("data/scores.json", "w")
-        json_file.write(json_string)
-        json_file.close()
+    def save(self):
+        # handle the file in a way that it can be read and written
+        with open("data/scores.json", "r+") as file:
+            # read the file
+            data = json.load(file)
+            print(data)
+            # add the new score
+            data["players"].append(self.__str__())
+            # write the file
+            json.dump(data, file, indent=4)
 
