@@ -263,7 +263,7 @@ class Game:
             # if player is DEAD start new game
             if player.health == 0:
                 explosion_list.add(Explosion(player))
-                score = Score(Game.PLAYER_NAME, player.kill_count + math.ceil(time.time()) - time_points)
+                score = Score(self.PLAYER_NAME, player.kill_count + math.ceil(time.time()) - time_points)
                 score.save()
                 self.game_over_screen()
                 break
