@@ -308,6 +308,7 @@ class Game:
             for explosions in explosion_list:
                 explosions.update()
 
+            # Render level on the screen
             font.render_to(screen, (5, 30), "Points: " + str(points),
                            (255, 255, 255))
             font.render_to(screen, (400, 300), 'Level' + str(level), (255, 255, 255))
