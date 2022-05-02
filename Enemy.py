@@ -9,3 +9,9 @@ class Enemy(pg.sprite.Sprite):
 
     def move(self):
         pass
+
+    def get_height(self):
+        pass
+
+    def get_width(self):
+        pass

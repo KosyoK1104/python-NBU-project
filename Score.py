@@ -21,11 +21,12 @@ class Score:
             'date': self.date.strftime("%b %d, %Y")
         }
 
-    def read(self) -> dict:
-        if not os.path.exists(self.DOCUMENTS_GAME_PATH):
-            os.mkdir(self.DOCUMENTS_GAME_PATH)
+    @staticmethod
+    def get_scoreboard() -> dict:
+        if not os.path.exists(Score.DOCUMENTS_GAME_PATH):
+            os.mkdir(Score.DOCUMENTS_GAME_PATH)
 
-        f = Path(self.DOCUMENTS_GAME_PATH + self.FILE_NAME)
+        f = Path(Score.DOCUMENTS_GAME_PATH + Score.FILE_NAME)
         f.touch(exist_ok=True)
 
         with open(f, "r") as file:
@@ -38,10 +39,11 @@ class Score:
         return data
 
     def save(self):
-        data = self.read()
+        data = self.get_scoreboard()
         with open(self.DOCUMENTS_GAME_PATH + self.FILE_NAME, "w") as file:
             # add the new score
             data["players"].append(self.data())
             # write the file
             data['players'].sort(key=lambda x: x['score'], reverse=True)
             json.dump(data, file, indent=2)
+

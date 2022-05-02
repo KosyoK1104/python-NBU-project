@@ -29,15 +29,15 @@ class Game:
     def __init__(self, background: Background, ):
         self.background = background
 
+    def set_player_name(self, name):
+        self.PLAYER_NAME = name
+
     def start_game_form(self):
         start_game_form = pygame_menu.Menu('', 500, 400, theme=pygame_menu.themes.THEME_DARK)
         start_game_form.add.text_input('Name: ', default='Player', onchange=self.set_player_name)
         start_game_form.add.button('Start', self.start_the_game)
         start_game_form.add.button('Return to menu', pygame_menu.events.BACK)
         return start_game_form
-
-    def set_player_name(self, name):
-        self.PLAYER_NAME = name
 
     def about_menu(self):
         about_menu = pygame_menu.Menu('About', 500, 400,
@@ -49,7 +49,40 @@ class Game:
         about_menu.add.button('Return to menu', pygame_menu.events.BACK)
         return about_menu
 
-    def initialize(self):
+    def scoreboard(self):
+        scores = Score.get_scoreboard()
+        scoreboard = pygame_menu.Menu('Scoreboard', 500, 400,
+                                      theme=pygame_menu.themes.THEME_DARK)
+        scoreboard.add.label(f"Name | Date | Score")
+        for score in scores['players'][:5]:
+            scoreboard.add.label(f"{score['name']} | {score['date']} | {score['score']}")
+        scoreboard.add.button('Return to menu', self.start_menu())
+
+        return scoreboard
+
+    def menu_scoreboard(self):
+        scores = Score.get_scoreboard()
+        scoreboard = pygame_menu.Menu('Scoreboard', 500, 400,
+                                      theme=pygame_menu.themes.THEME_DARK)
+        scoreboard.add.label(f"Name | Date | Score")
+        for score in scores['players'][:5]:
+            scoreboard.add.label(f"{score['name']} | {score['date']} | {score['score']}")
+        scoreboard.add.button('Return to menu', pygame_menu.events.BACK)
+
+        return scoreboard
+
+    def start_menu(self):
+        start_menu = pygame_menu.Menu('Welcome', 500, 400,
+                                      theme=pygame_menu.themes.THEME_DARK)
+
+        start_menu.add.button('Start Game', self.start_game_form())
+        start_menu.add.button('Scoreboard', self.menu_scoreboard())
+        start_menu.add.button('About', self.about_menu())
+        start_menu.add.button('Quit', pygame_menu.events.EXIT)
+
+        return start_menu
+
+    def initialize(self, menu_object=None):
 
         global menu
         global screen
@@ -61,16 +94,13 @@ class Game:
         pg.display.set_caption("Human vs Aliens")
         clock = pg.time.Clock()
 
-        menu = pygame_menu.Menu('Welcome', 500, 400,
-                                theme=pygame_menu.themes.THEME_DARK)
+        if menu_object is None:
+            menu_object = self.start_menu()
 
-        menu.add.button('Start Game', self.start_game_form())
-        menu.add.button('About', self.about_menu())
-        menu.add.button('Quit', pygame_menu.events.EXIT)
+        menu = menu_object
         menu.mainloop(screen)
 
-    @staticmethod
-    def exit_game():
+    def exit_game(self):
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 sys.exit()
@@ -146,7 +176,7 @@ class Game:
                              (255, 255, 255), (star[0], star[1]), (star[0], star[1]))
                 star[1] = star[1] + 1
 
-            # if the star is out of the screen, we put it back to the top
+                # if the star is out of the screen, we put it back to the top
                 if star[1] > self.SIZE[1]:
                     star[0] = random.randint(0, self.SIZE[0])
                     star[1] = 0
@@ -200,6 +230,8 @@ class Game:
                 enemies.add(EnemyFactory.build(1, 1))
                 enemy_reload = Alien.ALIEN_LOAD_TIME
 
+            # Type hinted Enemy
+            enemy: Enemy
             for enemy in enemies:
                 enemy.move()
 
@@ -221,16 +253,16 @@ class Game:
             # if player is DEAD start new game
             if player.health == 0:
                 explosion_list.add(Explosion(player))
-                # SCOREBOARD DOESN'T WORK PROPPERLY !!! DONT USE IT
                 score = Score(Game.PLAYER_NAME, player.kill_count + math.ceil(time.time()) - time_points)
                 score.save()
-                self.initialize()
+                break
 
             # update every explosion
             for explosions in explosion_list:
                 explosions.update()
 
-            font.render_to(screen, (5, 30), "Points: " + str(player.kill_count + math.ceil(time.time()) - time_points), (255, 255, 255))
+            font.render_to(screen, (5, 30), "Points: " + str(player.kill_count + math.ceil(time.time()) - time_points),
+                           (255, 255, 255))
 
             # shows fps in the title bar
             clock.tick(60)
@@ -239,3 +271,9 @@ class Game:
             dirty = all.draw(screen)
             pg.display.update(dirty)
             pg.display.flip()
+
+        # insert game over
+        while 1:
+            break
+
+        self.initialize(self.scoreboard())
