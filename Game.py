@@ -286,6 +286,8 @@ class Game:
                             explosion_list.add(Explosion(enemy))
                             bullet_list.remove(bullet)
                             if enemy.health == 0:
+                                Boss.Boss.BOSS_HEALTH *= level
+                                print("Boss health: " + str(Boss.Boss.BOSS_HEALTH))
                                 enemies.remove(enemy)
                                 player.kill_count += 30
                                 isBossAlive = False

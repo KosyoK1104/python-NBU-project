@@ -6,7 +6,8 @@ import pygame as pg
 
 
 class Boss(Enemy):
-    BOSS_DIMENSIONS = Width, Height = 150, 150
+    BOSS_DIMENSIONS = Width, Height = 200, 200
+    BOSS_HEALTH = 100
 
     def __init__(self):
         Enemy.__init__(self)
@@ -17,7 +18,7 @@ class Boss(Enemy):
         self.rect.y = 0
         self.horizontal_movement = 10
         self.direction = random.choice(['left', 'right'])
-        self.health = 100
+        self.health = Boss.BOSS_HEALTH
 
     def move(self):
         if self.BOSS_DIMENSIONS[0] == self.rect.x:
