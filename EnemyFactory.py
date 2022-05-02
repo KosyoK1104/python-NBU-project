@@ -12,7 +12,7 @@ class EnemyFactory:
     @staticmethod
     def build(enemyType, level) -> Enemy:
         alien_data = json.load(open("data/alien.json"))
-        enemyType = 3
+        enemyType = 1
         alien_level = random.randint(1, level)
 
         if enemyType == 1:
