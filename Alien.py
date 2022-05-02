@@ -28,7 +28,6 @@ class Alien(Enemy):
     # TODO implement border for the aliens
     def move(self):
         if self.ALIEN_DIMENSIONS[0] == self.rect.x:
-            print(Game.Game.SIZE)
             self.direction = 'right'
         if self.rect.x == Game.Game.SIZE[0] - self.ALIEN_DIMENSIONS[0] * 2:
             self.direction = 'left'
@@ -49,7 +48,7 @@ class Alien(Enemy):
 
         if self.horizontal_movement == 0:
             self.direction = random.choice(['left', 'right'])
-            self.horizontal_movement = 30
+            self.horizontal_movement = 60
 
         self.rect.y += 1
 

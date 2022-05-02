@@ -126,12 +126,23 @@ class Game:
             pg.display.set_caption(str("FPS: {}".format(clock.get_fps())))
             self.exit_game()
 
+    def nextLevel(self, points):
+        if points == 0:
+            points = 1
+        return math.floor((1 + math.sqrt(1 + 8 * points / 300)) / 2)
+
     # The game
     def start_the_game(self):
         menu.disable()
 
         # intro animation
         # self.intro()
+
+        # level
+        # function nextLevel(level)
+        #     return round((4 * (level ^ 3)) / 5)
+        # end
+        level = 1
 
         enemies = pg.sprite.Group()
         all = pg.sprite.RenderUpdates()
@@ -170,15 +181,19 @@ class Game:
         time_points = math.ceil(time.time())
         # Game loop
         while 1:
+            points = player.kill_count + math.ceil(time.time()) - time_points
             # Event handling for EXIT
             self.exit_game()
-
             # Stars background animation
             screen.fill(self.background.BACKGROUND_COLOR)
             screen.blit(self.background.getRandomBackground(), (0, 0))
             starColor = pg.Surface(screen.get_size())
             starColor = starColor.convert()
             starColor.fill((0, 0, 0))
+
+            if level < self.nextLevel(points):
+                level = self.nextLevel(points)
+
 
             # Draw stars
             for star in stars:
@@ -272,8 +287,10 @@ class Game:
             for explosions in explosion_list:
                 explosions.update()
 
-            font.render_to(screen, (5, 30), "Points: " + str(player.kill_count + math.ceil(time.time()) - time_points),
+            font.render_to(screen, (5, 30), "Points: " + str(points),
                            (255, 255, 255))
+            font.render_to(screen, (400, 300), 'Level' + str(level), (255, 255, 255))
+
 
             # shows fps in the title bar
             clock.tick(60)
