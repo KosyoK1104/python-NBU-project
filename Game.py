@@ -83,6 +83,7 @@ class Game:
             screen.blit(image_animation, (0, 0))
             pg.display.update()
             clock.tick(30)
+            pg.display.set_caption(str("FPS: {}".format(clock.get_fps())))
             self.exit_game()
 
     # The game
