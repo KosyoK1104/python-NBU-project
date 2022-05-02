@@ -34,9 +34,16 @@ class Alien(Enemy):
             self.direction = 'left'
 
         if self.direction == 'right':
-            self.rect.x += Enemy.SPEED
+            if self.rect.x + Enemy.SPEED < Game.Game.SIZE[0] - self.ALIEN_DIMENSIONS[0]:
+                self.rect.x += Enemy.SPEED
+            else:
+                self.direction = 'left'
+
         if self.direction == 'left':
-            self.rect.x -= Enemy.SPEED
+            if self.rect.x - Enemy.SPEED > 0 + 10:
+                self.rect.x -= Enemy.SPEED
+            else:
+                self.direction = 'right'
 
         self.horizontal_movement -= 1
 
