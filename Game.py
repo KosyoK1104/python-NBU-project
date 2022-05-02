@@ -116,6 +116,17 @@ class Game:
             pg.display.set_caption(str("FPS: {}".format(clock.get_fps())))
             self.exit_game()
 
+    def game_over_screen(self):
+        # the last frame is 119
+        for i in range(0, 119):
+            frames = str(i).zfill(3)
+            image_animation = pg.image.load('data/GAME_OVER_SCREEN/frame_{}_delay-0.04s.jpg'.format(frames))
+            screen.blit(image_animation, (0, 0))
+            pg.display.update()
+            clock.tick(30)
+            pg.display.set_caption(str("FPS: {}".format(clock.get_fps())))
+            self.exit_game()
+
     # The game
     def start_the_game(self):
         menu.disable()
@@ -255,6 +266,7 @@ class Game:
                 explosion_list.add(Explosion(player))
                 score = Score(Game.PLAYER_NAME, player.kill_count + math.ceil(time.time()) - time_points)
                 score.save()
+                self.game_over_screen()
                 break
 
             # update every explosion
