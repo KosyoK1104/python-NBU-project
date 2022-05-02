@@ -61,12 +61,19 @@ class Game:
         return scoreboard
 
     def menu_scoreboard(self):
-        scores = Score.get_scoreboard()
         scoreboard = pygame_menu.Menu('Scoreboard', 500, 400,
                                       theme=pygame_menu.themes.THEME_DARK)
-        scoreboard.add.label(f"Name | Date | Score")
+        scores = Score.get_scoreboard()
+        table = scoreboard.add.table(font_size=20)
+        table.default_cell_padding = 8
+        table.default_row_background_color = (40, 41, 35)
+        table.default_cell_border_color = 'white'
+        table.add_row(['Name', 'Date', 'Score'])
+
         for score in scores['players'][:5]:
-            scoreboard.add.label(f"{score['name']} | {score['date']} | {score['score']}")
+            table.add_row([score['name'], score['date'], score['score']])
+
+        scoreboard.add.label('', font_size=3)
         scoreboard.add.button('Return to menu', pygame_menu.events.BACK)
 
         return scoreboard
@@ -138,10 +145,6 @@ class Game:
         # intro animation
         # self.intro()
 
-        # level
-        # function nextLevel(level)
-        #     return round((4 * (level ^ 3)) / 5)
-        # end
         level = 1
 
         enemies = pg.sprite.Group()
@@ -193,7 +196,6 @@ class Game:
 
             if level < self.nextLevel(points):
                 level = self.nextLevel(points)
-
 
             # Draw stars
             for star in stars:
@@ -290,7 +292,6 @@ class Game:
             font.render_to(screen, (5, 30), "Points: " + str(points),
                            (255, 255, 255))
             font.render_to(screen, (400, 300), 'Level' + str(level), (255, 255, 255))
-
 
             # shows fps in the title bar
             clock.tick(60)
