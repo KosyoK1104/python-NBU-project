@@ -19,7 +19,7 @@ class Player(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = 360
         self.rect.y = 500
-        self.health = 1
+        self.health = 10
         self.attack = Player.DAMAGE
         self.speed = Player.SPEED
         self.kill_count = 0

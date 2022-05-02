@@ -300,6 +300,7 @@ class Game:
                 explosion_list.add(Explosion(player))
                 score = Score(self.PLAYER_NAME, player.kill_count + math.ceil(time.time()) - time_points)
                 score.save()
+                # GAME OVER ANIMATION
                 self.game_over_screen()
                 break
 
@@ -318,9 +319,5 @@ class Game:
             dirty = all.draw(screen)
             pg.display.update(dirty)
             pg.display.flip()
-
-        # insert game over
-        while 1:
-            break
 
         self.initialize(self.scoreboard())
