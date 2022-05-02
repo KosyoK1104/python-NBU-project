@@ -9,10 +9,14 @@ from Enemy import Enemy
 
 class EnemyFactory:
     # generate enemy from json file?
+    ALIEN = 1
+    BOSS = 2
+
     @staticmethod
     def build(enemyType, level) -> Enemy:
         alien_data = json.load(open("data/alien.json"))
-        enemyType = 1
+        # enemyType = 1
+        level = 1
         alien_level = random.randint(1, level)
 
         if enemyType == 1:

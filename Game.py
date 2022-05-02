@@ -8,6 +8,7 @@ import random
 
 import pygame_menu
 
+import Boss
 from Score import Score
 from EnemyFactory import EnemyFactory
 from Alien import Alien
@@ -136,7 +137,7 @@ class Game:
     def nextLevel(self, points):
         if points == 0:
             points = 1
-        return math.floor((1 + math.sqrt(1 + 8 * points / 300)) / 2)
+        return math.floor((1 + math.sqrt(1 + 8 * points / 100)) / 2)
 
     # The game
     def start_the_game(self):
@@ -157,7 +158,7 @@ class Game:
         ]
         # Aliens
         enemy_reload = Alien.ALIEN_LOAD_TIME
-        enemies.add(EnemyFactory.build(1, 1))
+        enemies.add(EnemyFactory.build(EnemyFactory.ALIEN, 1))
 
         # Spawning the player
         player = Player()
@@ -182,6 +183,10 @@ class Game:
         font = freetype.Font("data/Font.ttf", 20)
 
         time_points = math.ceil(time.time())
+
+        # is there is a boss
+        isBossAlive = False
+
         # Game loop
         while 1:
             points = player.kill_count + math.ceil(time.time()) - time_points
@@ -193,9 +198,6 @@ class Game:
             starColor = pg.Surface(screen.get_size())
             starColor = starColor.convert()
             starColor.fill((0, 0, 0))
-
-            if level < self.nextLevel(points):
-                level = self.nextLevel(points)
 
             # Draw stars
             for star in stars:
@@ -250,12 +252,18 @@ class Game:
             # update all the sprites
             all.update()
 
+            if level < self.nextLevel(points):
+                level = self.nextLevel(points)
+                isBossAlive = True
+                enemies.add(EnemyFactory.build(EnemyFactory.BOSS, level))
+
             # Spawn new Enemies
-            if enemy_reload:
-                enemy_reload = enemy_reload - 1
-            elif not int(random.random() * Alien.ODDS):
-                enemies.add(EnemyFactory.build(1, 1))
-                enemy_reload = Alien.ALIEN_LOAD_TIME
+            if not isBossAlive:
+                if enemy_reload:
+                    enemy_reload = enemy_reload - 1
+                elif not int(random.random() * Alien.ODDS):
+                    enemies.add(EnemyFactory.build(EnemyFactory.ALIEN, level))
+                    enemy_reload = Alien.ALIEN_LOAD_TIME
 
             # Type hinted Enemy
             enemy: Enemy
@@ -272,10 +280,20 @@ class Game:
 
                 for bullet in bullet_list:
                     if enemy.rect.colliderect(bullet):
-                        explosion_list.add(Explosion(enemy))
-                        enemies.remove(enemy)
-                        bullet_list.remove(bullet)
-                        player.kill_count += 10
+                        if isinstance(enemy, Boss.Boss):
+                            enemy: Boss.Boss
+                            enemy.health -= 10
+                            explosion_list.add(Explosion(enemy))
+                            bullet_list.remove(bullet)
+                            if enemy.health == 0:
+                                enemies.remove(enemy)
+                                player.kill_count += 30
+                                isBossAlive = False
+                        else:
+                            explosion_list.add(Explosion(enemy))
+                            enemies.remove(enemy)
+                            bullet_list.remove(bullet)
+                            player.kill_count += 10
 
             # if player is DEAD start new game
             if player.health == 0:

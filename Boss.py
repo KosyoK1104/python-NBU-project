@@ -17,6 +17,7 @@ class Boss(Enemy):
         self.rect.y = 0
         self.horizontal_movement = 10
         self.direction = random.choice(['left', 'right'])
+        self.health = 100
 
     def move(self):
         if self.BOSS_DIMENSIONS[0] == self.rect.x:
