@@ -118,9 +118,8 @@ class Game:
 
     def game_over_screen(self):
         # the last frame is 119
-        for i in range(0, 119):
-            frames = str(i).zfill(3)
-            image_animation = pg.image.load('data/GAME_OVER_SCREEN/frame_{}_delay-0.04s.jpg'.format(frames))
+        for i in range(1, 119):
+            image_animation = pg.image.load('data/GAME_OVER_SCREEN/frame ({}).jpg'.format(i))
             screen.blit(image_animation, (0, 0))
             pg.display.update()
             clock.tick(30)
