@@ -51,12 +51,19 @@ class Game:
         return about_menu
 
     def scoreboard(self):
-        scores = Score.get_scoreboard()
         scoreboard = pygame_menu.Menu('Scoreboard', 500, 400,
                                       theme=pygame_menu.themes.THEME_DARK)
-        scoreboard.add.label(f"Name | Date | Score")
+        scores = Score.get_scoreboard()
+        table = scoreboard.add.table(font_size=20)
+        table.default_cell_padding = 8
+        table.default_row_background_color = (40, 41, 35)
+        table.default_cell_border_color = 'white'
+        table.add_row(['Name', 'Date', 'Score'])
+
         for score in scores['players'][:5]:
-            scoreboard.add.label(f"{score['name']} | {score['date']} | {score['score']}")
+            table.add_row([score['name'], score['date'], score['score']])
+
+        scoreboard.add.label('', font_size=3)
         scoreboard.add.button('Return to menu', self.start_menu())
 
         return scoreboard
@@ -323,4 +330,4 @@ class Game:
             pg.display.update(dirty)
             pg.display.flip()
 
-        self.initialize(self.scoreboard())
+        self.initialize(self.menu_scoreboard())
