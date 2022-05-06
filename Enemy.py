@@ -6,8 +6,18 @@ class Enemy(pg.sprite.Sprite):
 
     def __init__(self):
         pg.sprite.Sprite.__init__(self)
+        self.health = None
+
+    def kill(self) -> None:
+        pass
+
+    def get_points(self):
+        pass
 
     def move(self):
+        pass
+
+    def update(self):
         pass
 
     def get_height(self):

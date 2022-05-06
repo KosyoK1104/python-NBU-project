@@ -26,6 +26,8 @@ global clock
 class Game:
     SIZE = width, height = 800, 600
     PLAYER_NAME = "Player"
+    isBossAlive = False
+    LEVEL = 1
 
     def __init__(self, background: Background, ):
         self.background = background
@@ -153,8 +155,6 @@ class Game:
         # intro animation
         # self.intro()
 
-        level = 1
-
         enemies = pg.sprite.Group()
         all = pg.sprite.RenderUpdates()
 
@@ -165,7 +165,7 @@ class Game:
         ]
         # Aliens
         enemy_reload = Alien.ALIEN_LOAD_TIME
-        enemies.add(EnemyFactory.build(EnemyFactory.ALIEN, 1))
+        enemies.add(EnemyFactory.build(EnemyFactory.ALIEN, self.LEVEL))
 
         # Spawning the player
         player = Player()
@@ -184,15 +184,15 @@ class Game:
         # this flag is used to check if the player stops to shoot
         flag_key_up = True
 
+        # this flag is used to check if there is still going collision
+        flag_collision = False
+
         # you have to call this at the start to init the font,
         pg.font.init()
         # get data for Font
         font = freetype.Font("data/Font.ttf", 20)
 
         time_points = math.ceil(time.time())
-
-        # is there is a boss
-        isBossAlive = False
 
         # Game loop
         while 1:
@@ -259,17 +259,16 @@ class Game:
             # update all the sprites
             all.update()
 
-            if level < self.nextLevel(points):
-                level = self.nextLevel(points)
-                isBossAlive = True
-                enemies.add(EnemyFactory.build(EnemyFactory.BOSS, level))
+            if self.LEVEL < self.nextLevel(points):
+                self.LEVEL = self.nextLevel(points)
+                enemies.add(EnemyFactory.build(EnemyFactory.BOSS, self.LEVEL))
 
             # Spawn new Enemies
-            if not isBossAlive:
+            if not Game.isBossAlive:
                 if enemy_reload:
                     enemy_reload = enemy_reload - 1
                 elif not int(random.random() * Alien.ODDS):
-                    enemies.add(EnemyFactory.build(EnemyFactory.ALIEN, level))
+                    enemies.add(EnemyFactory.build(EnemyFactory.ALIEN, self.LEVEL))
                     enemy_reload = Alien.ALIEN_LOAD_TIME
 
             # Type hinted Enemy
@@ -277,35 +276,44 @@ class Game:
             for enemy in enemies:
                 enemy.move()
 
-                if enemy.rect.colliderect(player):
-                    explosion_list.add(Explosion(enemy))
-                    enemies.remove(enemy)
+            # Check for collisions between the player and the enemies
+                if enemy.rect.colliderect(player) and not flag_collision:
                     player.health -= 1
-
-                if enemy.rect.y + enemy.get_height() > self.SIZE[1]:
-                    enemies.remove(enemy)
+                    enemy.health -= player.DAMAGE  # Here must be a bullets damage
+                    explosion_list.add(Explosion(enemy))
+                    if enemy.health <= 0:
+                        enemies.remove(enemy)
+                flag_collision = enemy.rect.colliderect(player)
 
                 for bullet in bullet_list:
                     if enemy.rect.colliderect(bullet):
                         if isinstance(enemy, Boss.Boss):
                             enemy: Boss.Boss
-                            enemy.health -= 10
-                            explosion_list.add(Explosion(enemy))
-                            bullet_list.remove(bullet)
-                            if enemy.health == 0:
-                                Boss.Boss.BOSS_HEALTH *= level
-                                print("Boss health: " + str(Boss.Boss.BOSS_HEALTH))
-                                enemies.remove(enemy)
-                                player.kill_count += 30
-                                isBossAlive = False
+                            enemy.health -= player.DAMAGE  # Here must be a bullets damage
+
+                            # if the boss is NOT DEAD bullets explode
+                            explosion_list.add(Explosion(bullet))
+                            bullet.kill()
+
+                            # if the boss IS DEAD, the Boss explodes
+                            if enemy.health <= 0:
+                                explosion_list.add(Explosion(enemy))
+                                enemy.kill()
+                                player.set_kill_count(player.get_kill_count() + 10 ^ self.LEVEL)
                         else:
-                            explosion_list.add(Explosion(enemy))
-                            enemies.remove(enemy)
+                            enemy.health -= player.DAMAGE  # Here must be a bullets damage
+                            # if the enemy is NOT DEAD bullets explode
+                            if enemy.health <= 0:
+                                explosion_list.add(Explosion(enemy))
+                                player.set_kill_count(player.get_kill_count() + enemy.get_points())
+                                enemy.kill()
+                            else:
+                                # if the enemy IS DEAD, the enemy explodes
+                                explosion_list.add(Explosion(bullet))
                             bullet_list.remove(bullet)
-                            player.kill_count += 10
 
             # if player is DEAD start new game
-            if player.health == 0:
+            if player.health <= 0:
                 explosion_list.add(Explosion(player))
                 score = Score(self.PLAYER_NAME, player.kill_count + math.ceil(time.time()) - time_points)
                 score.save()
@@ -317,12 +325,14 @@ class Game:
             for explosions in explosion_list:
                 explosions.update()
 
-            # Render level on the screen
+            # Render POINTS on the screen
             font.render_to(screen, (5, 30), "Points: " + str(points),
                            (255, 255, 255))
-            font.render_to(screen, (400, 300), 'Level' + str(level), (255, 255, 255))
 
-            # shows fps in the title bar
+            # Render LEVEL on the screen
+            font.render_to(screen, (400, 300), 'Level' + str(self.LEVEL), (255, 255, 255))
+
+            # Shows FPS in the title bar
             clock.tick(60)
             pg.display.set_caption(str("FPS: {}".format(clock.get_fps())))
 
@@ -330,4 +340,4 @@ class Game:
             pg.display.update(dirty)
             pg.display.flip()
 
-        self.initialize(self.menu_scoreboard())
+        self.initialize(self.scoreboard())

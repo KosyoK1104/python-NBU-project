@@ -16,11 +16,11 @@ class EnemyFactory:
     def build(enemyType, level) -> Enemy:
         alien_data = json.load(open("data/alien.json"))
         # enemyType = 1
-        level = 1
+        # level = 1
         alien_level = random.randint(1, level)
 
         if enemyType == 1:
-            return Alien(random.choice(alien_data['data'][str(alien_level)])['sprite'])
+            return Alien(random.choice(alien_data['data'][str(alien_level)])['sprite'], alien_level)
         if enemyType == 2:
             return Boss()
 

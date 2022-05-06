@@ -5,7 +5,7 @@ import Bullet
 
 
 class Player(pg.sprite.Sprite):
-    DAMAGE = 30
+    DAMAGE = 10
     SPEED = 5
     MAX_HEALTH = 100
     BULLET_SPEED = 10
@@ -43,3 +43,9 @@ class Player(pg.sprite.Sprite):
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
+
+    def set_kill_count(self, kill_count):
+        self.kill_count = kill_count
+
+    def get_kill_count(self) -> int:
+        return self.kill_count

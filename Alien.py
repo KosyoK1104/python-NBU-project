@@ -11,7 +11,7 @@ class Alien(Enemy):
     ALIEN_LOAD_TIME = 60
     ALIEN_DIMENSIONS = Width, Height = 80, 80
 
-    def __init__(self, sprite):
+    def __init__(self, sprite, level):
         Enemy.__init__(self)
         self.image = pg.image.load(sprite)
         self.image = pg.transform.scale(self.image, (self.ALIEN_DIMENSIONS[0], self.ALIEN_DIMENSIONS[1]))
@@ -20,6 +20,8 @@ class Alien(Enemy):
         self.rect.y = 0
         self.horizontal_movement = 60
         self.direction = random.choice(['left', 'right'])
+        self.health = level*10
+        self.points = self.health
 
     @staticmethod
     def decrease(self):
@@ -50,7 +52,20 @@ class Alien(Enemy):
             self.direction = random.choice(['left', 'right'])
             self.horizontal_movement = 60
 
+        # increments the vertical position so that the aliens move down indefinitely
         self.rect.y += 1
+
+        # if the aliens reach the bottom of the screen, they teleport back to the top
+        if self.rect.y > Game.Game.SIZE[1]:
+            self.rect.center = random.randint(0, Game.Game.SIZE[0]), -self.ALIEN_DIMENSIONS[1]
+            # print("ALIEN REACHED THE BOTTOM")
+            # print("alien position: " + str(self.rect.center))
+
+    def kill(self) -> None:
+        pg.sprite.Sprite.kill(self)
+
+    def get_points(self) -> int:
+        return self.points
 
     def get_width(self):
         return self.ALIEN_DIMENSIONS[0]

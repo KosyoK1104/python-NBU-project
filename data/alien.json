@@ -4,16 +4,18 @@
   "data": {
     "1": [
       {
-        "sprite": "data/sprites/alien.PNG",
-        "level": 1
+        "sprite": "data/sprites/alien.PNG"
       },
       {
-        "sprite": "data/sprites/Beholder.png",
-        "level": 1
+        "sprite": "data/sprites/Beholder.png"
       },
       {
-        "sprite": "data/sprites/Emissary.png",
-        "level": 1
+        "sprite": "data/sprites/Emissary.png"
+      }
+    ],
+    "2": [
+      {
+        "sprite": "data/sprites/red_space_craft.png"
       }
     ]
   }

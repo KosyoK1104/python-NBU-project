@@ -6,7 +6,7 @@ import pygame as pg
 
 
 class Boss(Enemy):
-    BOSS_DIMENSIONS = Width, Height = 200, 200
+    BOSS_DIMENSIONS = Width, Height = 200, 150
     BOSS_HEALTH = 100
 
     def __init__(self):
@@ -19,6 +19,7 @@ class Boss(Enemy):
         self.horizontal_movement = 10
         self.direction = random.choice(['left', 'right'])
         self.health = Boss.BOSS_HEALTH
+        Game.Game.isBossAlive = True
 
     def move(self):
         if self.BOSS_DIMENSIONS[0] == self.rect.x:
@@ -43,6 +44,14 @@ class Boss(Enemy):
         if self.horizontal_movement == 0:
             self.direction = random.choice(['left', 'right'])
             self.horizontal_movement = 30
+
+    def increment_boss_health(self):
+        Boss.BOSS_HEALTH *= Game.Game.LEVEL
+        print("Boss health: " + str(Boss.BOSS_HEALTH))
+
+    def kill(self) -> None:
+        pg.sprite.Sprite.kill(self)
+        Game.Game.isBossAlive = False
 
     def get_width(self):
         return self.BOSS_DIMENSIONS[0]
