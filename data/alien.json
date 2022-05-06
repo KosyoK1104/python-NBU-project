@@ -4,58 +4,82 @@
   "data": {
     "1": [
       {
-        "sprite": "data/sprites/alien.PNG"
+        "sprite": "data/sprites/Ship/ship (1).png"
       },
       {
-        "sprite": "data/sprites/Beholder.png"
+        "sprite": "data/sprites/Ship/ship (2).png"
       },
       {
-        "sprite": "data/sprites/Emissary.png"
+        "sprite": "data/sprites/Ship/ship (3).png"
       }
     ],
     "2": [
       {
-        "sprite": "data/sprites/red_space_craft.png"
+        "sprite": "data/sprites/Ship/ship (4).png"
+      },
+      {
+        "sprite": "data/sprites/Ship/ship (5).png"
+      },
+      {
+        "sprite": "data/sprites/Ship/ship (6).png"
       }
     ],
     "3": [
       {
-        "sprite": "data/sprites/red_big_spacecraft.png"
+        "sprite": "data/sprites/Ship/ship (7).png"
+      },
+      {
+        "sprite": "data/sprites/Ship/ship (8).png"
       }
     ],
     "4": [
       {
-        "sprite": "data/sprites/red_space_craft.png"
+        "sprite": "data/sprites/Ship/ship (9).png"
+      },
+      {
+        "sprite": "data/sprites/Ship/ship (10).png"
+      },
+      {
+        "sprite": "data/sprites/Ship/ship (11).png"
       }
     ],
     "5": [
       {
-        "sprite": "data/sprites/red_space_craft.png"
+        "sprite": "data/sprites/Ship/ship (12).png"
+      },
+      {
+        "sprite": "data/sprites/Ship/ship (13).png"
+      },
+      {
+        "sprite": "data/sprites/Ship/ship (14).png"
       }
     ],
     "6": [
       {
-        "sprite": "data/sprites/red_space_craft.png"
+        "sprite": "data/sprites/Ship/ship (15).png"
+      },
+      {
+        "sprite": "data/sprites/Ship/ship (16).png"
       }
     ],
     "7": [
       {
-        "sprite": "data/sprites/red_space_craft.png"
+        "sprite": "data/sprites/F5S1.png"
       }
     ],
     "8": [
       {
-        "sprite": "data/sprites/red_space_craft.png"
+        "sprite": "data/sprites/F5S2.png"
       }
     ],
     "9": [
       {
-        "sprite": "data/sprites/red_space_craft.png"
+        "sprite": "data/sprites/F5S3.png"
       }
     ],
     "10": [
       {
-        "sprite": "data/sprites/red_space_craft.png"
+        "sprite": "data/sprites/F5S4.png"
       }
     ]
   }

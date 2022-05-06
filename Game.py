@@ -146,7 +146,7 @@ class Game:
     def nextLevel(self, points):
         if points == 0:
             points = 1
-        return math.floor((1 + math.sqrt(1 + 8 * points / 100)) / 2)
+        return math.floor((1 + math.sqrt(1 + 8 * points / 300)) / 2)
 
     # The game
     def start_the_game(self):

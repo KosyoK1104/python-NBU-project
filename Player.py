@@ -11,7 +11,7 @@ class Player(pg.sprite.Sprite):
     MAX_HEALTH = 100
     BULLET_SPEED = 10
     print("Player class loaded")
-    PLAYER_DIMENSIONS = Width, Height = 80, 80
+    PLAYER_DIMENSIONS = Width, Height = 60, 60
 
     def __init__(self):
         pg.sprite.Sprite.__init__(self)
