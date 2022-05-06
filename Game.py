@@ -279,7 +279,7 @@ class Game:
             # Check for collisions between the player and the enemies
                 if enemy.rect.colliderect(player) and not flag_collision:
                     player.health -= 1
-                    enemy.health -= player.DAMAGE  # Here must be a bullets damage
+                    enemy.health -= player.DAMAGE  # Here must be a player damage
                     explosion_list.add(Explosion(enemy))
                     if enemy.health <= 0:
                         enemies.remove(enemy)
@@ -289,8 +289,7 @@ class Game:
                     if enemy.rect.colliderect(bullet):
                         if isinstance(enemy, Boss.Boss):
                             enemy: Boss.Boss
-                            enemy.health -= player.DAMAGE  # Here must be a bullets damage
-
+                            enemy.health -= bullet.get_damage()  # Here must be a bullet damage
                             # if the boss is NOT DEAD bullets explode
                             explosion_list.add(Explosion(bullet))
                             bullet.kill()
@@ -301,7 +300,7 @@ class Game:
                                 enemy.kill()
                                 player.set_kill_count(player.get_kill_count() + 10 ^ self.LEVEL)
                         else:
-                            enemy.health -= player.DAMAGE  # Here must be a bullets damage
+                            enemy.health -= bullet.get_damage()  # Here must be a bullet damage
                             # if the enemy is NOT DEAD bullets explode
                             if enemy.health <= 0:
                                 explosion_list.add(Explosion(enemy))

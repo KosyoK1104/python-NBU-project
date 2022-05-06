@@ -6,6 +6,7 @@ import Bullet
 
 class Player(pg.sprite.Sprite):
     DAMAGE = 10
+    MAX_DAMAGE = DAMAGE*(2 ^ 10)
     SPEED = 5
     MAX_HEALTH = 100
     BULLET_SPEED = 10
@@ -20,7 +21,7 @@ class Player(pg.sprite.Sprite):
         self.rect.x = 360
         self.rect.y = 500
         self.health = 10
-        self.attack = Player.DAMAGE
+        self.attack_damage = Player.DAMAGE
         self.speed = Player.SPEED
         self.kill_count = 0
 
@@ -39,7 +40,7 @@ class Player(pg.sprite.Sprite):
     def shoot(self) -> Bullet.Bullet:
         # print("Bullet shot")
         # create a bullet object with name bullet
-        return Bullet.Bullet(self.rect.x + 15, self.rect.y, self.BULLET_SPEED)
+        return Bullet.Bullet(self, self.BULLET_SPEED)
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
