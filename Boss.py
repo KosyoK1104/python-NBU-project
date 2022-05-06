@@ -9,7 +9,7 @@ class Boss(Enemy):
     BOSS_DIMENSIONS = Width, Height = 200, 150
     BOSS_HEALTH = 100
 
-    def __init__(self):
+    def __init__(self, level):
         Enemy.__init__(self)
         self.image = pg.image.load('data/sprites/alien_boss.gif')
         self.image = pg.transform.scale(self.image, (self.BOSS_DIMENSIONS[0], self.BOSS_DIMENSIONS[1]))
@@ -18,7 +18,9 @@ class Boss(Enemy):
         self.rect.y = 0
         self.horizontal_movement = 10
         self.direction = random.choice(['left', 'right'])
-        self.health = Boss.BOSS_HEALTH
+        self.health = Boss.BOSS_HEALTH * (pow(2, level))
+        # print("Boss level {} health: ".format(level) + str(self.health))
+
         Game.Game.isBossAlive = True
 
     def move(self):
@@ -44,10 +46,6 @@ class Boss(Enemy):
         if self.horizontal_movement == 0:
             self.direction = random.choice(['left', 'right'])
             self.horizontal_movement = 30
-
-    def increment_boss_health(self):
-        Boss.BOSS_HEALTH *= Game.Game.LEVEL
-        print("Boss health: " + str(Boss.BOSS_HEALTH))
 
     def kill(self) -> None:
         pg.sprite.Sprite.kill(self)

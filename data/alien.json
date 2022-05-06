@@ -17,6 +17,46 @@
       {
         "sprite": "data/sprites/red_space_craft.png"
       }
+    ],
+    "3": [
+      {
+        "sprite": "data/sprites/red_big_spacecraft.png"
+      }
+    ],
+    "4": [
+      {
+        "sprite": "data/sprites/red_space_craft.png"
+      }
+    ],
+    "5": [
+      {
+        "sprite": "data/sprites/red_space_craft.png"
+      }
+    ],
+    "6": [
+      {
+        "sprite": "data/sprites/red_space_craft.png"
+      }
+    ],
+    "7": [
+      {
+        "sprite": "data/sprites/red_space_craft.png"
+      }
+    ],
+    "8": [
+      {
+        "sprite": "data/sprites/red_space_craft.png"
+      }
+    ],
+    "9": [
+      {
+        "sprite": "data/sprites/red_space_craft.png"
+      }
+    ],
+    "10": [
+      {
+        "sprite": "data/sprites/red_space_craft.png"
+      }
     ]
   }
 }

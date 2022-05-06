@@ -298,12 +298,14 @@ class Game:
                             if enemy.health <= 0:
                                 explosion_list.add(Explosion(enemy))
                                 enemy.kill()
-                                player.set_kill_count(player.get_kill_count() + 10 ^ self.LEVEL)
+                                # Points from the Boss
+                                player.set_kill_count(player.get_kill_count() + (self.LEVEL * pow(2, self.LEVEL)))
                         else:
                             enemy.health -= bullet.get_damage()  # Here must be a bullet damage
                             # if the enemy is NOT DEAD bullets explode
                             if enemy.health <= 0:
                                 explosion_list.add(Explosion(enemy))
+                                # Points from the Alien == Alien.health
                                 player.set_kill_count(player.get_kill_count() + enemy.get_points())
                                 enemy.kill()
                             else:

@@ -22,6 +22,6 @@ class EnemyFactory:
         if enemyType == 1:
             return Alien(random.choice(alien_data['data'][str(alien_level)])['sprite'], alien_level)
         if enemyType == 2:
-            return Boss()
+            return Boss(level)
 
         raise GameConstraintViolationException.invalid_enemy_type()
