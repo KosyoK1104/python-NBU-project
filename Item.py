@@ -4,7 +4,7 @@ import Game
 
 
 class Item(pg.sprite.Sprite):
-    ITEM_DIMENSIONS = Width, Height = 20, 20
+    ITEM_DIMENSIONS = Width, Height = 40, 40
     SPAWN_ODDS = 200
 
     def __init__(self, enemy_x, enemy_y, sprite, base_damage, bullet_speed, level, time_counter):
@@ -29,7 +29,6 @@ class Item(pg.sprite.Sprite):
             self.time_counter -= 1
 
         if self.time_counter == 0:
-            print('death')
             self.kill()
             return -1
 

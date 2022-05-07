@@ -358,6 +358,7 @@ class Game:
 
             # Render LEVEL on the screen
             font.render_to(screen, (400, 300), 'Level' + str(self.LEVEL), (255, 255, 255))
+            font.render_to(screen, (100, 300), 'Level' + str(player.attack_damage), (255, 255, 255))
 
             # Shows FPS in the title bar
             clock.tick(60)
