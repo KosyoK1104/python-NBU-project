@@ -1,5 +1,8 @@
 # python-NBU-project
 ###
+
+### Install packages 
+`pip install -r requirements.txt`
 ### Packages
 - https://pygame-menu.readthedocs.io/en/4.2.7/
 
@@ -9,12 +12,24 @@
 ## Dependencies
 - pygame
 - pygame-menu
+- pyinstaller
 
-## TODO
-- [ ] Menu flow
-- [ ] Start the game
-- [ ] Create Player
-- [ ] Move Player
-- [ ] Create Enemy
-- [ ] Create Alien or Boss
-- [ ] Shoot bullet from Player
+## Make an executable file
+Run:
+`pyinstaller main.py --name NAME --noconsole -i File.ico`
+
+[comment]: <> (## TODO)
+
+[comment]: <> (- [ ] Menu flow)
+
+[comment]: <> (- [ ] Start the game)
+
+[comment]: <> (- [ ] Create Player)
+
+[comment]: <> (- [ ] Move Player)
+
+[comment]: <> (- [ ] Create Enemy)
+
+[comment]: <> (- [ ] Create Alien or Boss)
+
+[comment]: <> (- [ ] Shoot bullet from Player)
