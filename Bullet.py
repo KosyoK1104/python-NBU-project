@@ -1,5 +1,4 @@
 import pygame as pg
-import Game
 
 
 # create a bullet class with a constructor

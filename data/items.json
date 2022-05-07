@@ -1,0 +1,78 @@
+{
+  "type": "ItemsData",
+  "version": "1.0.0",
+  "data": [
+    {
+      "sprite": "data/sprites/items/UFO_Cortex.png",
+      "base_damage": 10,
+      "bullet_speed": -5,
+      "time_counter": 300
+    },
+    {
+      "sprite": "data/sprites/items/UFO_Ice.png",
+      "base_damage": -10,
+      "bullet_speed": 10,
+      "time_counter": 200
+    },
+    {
+      "sprite": "data/sprites/items/UFO_Mutant.png",
+      "base_damage": 3,
+      "bullet_speed": 10,
+      "time_counter": 1000
+    },
+    {
+      "sprite": "data/sprites/items/UFO_PlasmaShield_Cortex.png",
+      "base_damage": 3,
+      "bullet_speed": 10,
+      "time_counter": 3000
+    },
+    {
+      "sprite": "data/sprites/items/UFO_PlasmaShield_Interference.png",
+      "base_damage": 3,
+      "bullet_speed": 10,
+      "time_counter": 200
+    },
+    {
+      "sprite": "data/sprites/items/UFO_PlasmaShield_Pink.png",
+      "base_damage": 3,
+      "bullet_speed": 10,
+      "time_counter": 1500
+    },
+    {
+      "sprite": "data/sprites/items/UFO_PlasmaShield_Red.png",
+      "base_damage": 3,
+      "bullet_speed": 10,
+      "time_counter": 600
+    },
+    {
+      "sprite": "data/sprites/items/UPMLab_A.png",
+      "base_damage": 3,
+      "bullet_speed": 10,
+      "time_counter": 850
+    },
+    {
+      "sprite": "data/sprites/items/UPMLab_B.png",
+      "base_damage": 3,
+      "bullet_speed": 10,
+      "time_counter": 300
+    },
+    {
+      "sprite": "data/sprites/items/UPMLab_C.png",
+      "base_damage": 3,
+      "bullet_speed": 10,
+      "time_counter": 600
+    },
+    {
+      "sprite": "data/sprites/items/UPMLab_D.png",
+      "base_damage": 3,
+      "bullet_speed": 10,
+      "time_counter": 150
+    },
+    {
+      "sprite": "data/sprites/items/UPMLab_E_Magic.png",
+      "base_damage": 3,
+      "bullet_speed": 10,
+      "time_counter": -250
+    }
+  ]
+}

@@ -1,8 +1,9 @@
 import random
 
+import pygame as pg
+
 import Game
 from Enemy import Enemy
-import pygame as pg
 
 
 class Boss(Enemy):

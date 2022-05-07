@@ -1,22 +1,24 @@
 import math
+import random
+import sys
 import time
 
 import pygame as pg
 import pygame.freetype as freetype
-import sys
-import random
-
 import pygame_menu
 
 import Boss
-from Score import Score
-from EnemyFactory import EnemyFactory
 from Alien import Alien
-from Enemy import Enemy
 from Background import Background
-from Player import Player
-from Healthbar import Healthbar
+from Bullet import Bullet
+from Enemy import Enemy
+from EnemyFactory import EnemyFactory
+from ItemFactory import ItemFactory
 from Explosion import Explosion
+from Healthbar import Healthbar
+from Item import Item
+from Player import Player
+from Score import Score
 
 global menu
 global screen
@@ -181,6 +183,9 @@ class Game:
         # creating a list of explosions
         explosion_list = pg.sprite.Group()
 
+        # creating a list of items
+        items = pg.sprite.Group()
+
         # this flag is used to check if the player stops to shoot
         flag_key_up = True
 
@@ -232,6 +237,9 @@ class Game:
             # Draw Aliens
             enemies.draw(screen)
 
+            # Draw items
+            items.draw(screen)
+
             # listens to the events and passes them to the player event handler
             keys = pg.key.get_pressed()
             player.event_handler(keys)
@@ -252,12 +260,23 @@ class Game:
             # DRAW the explosions
             explosion_list.draw(screen)
 
+            # update all the sprites
+            all.update()
+
             # Increment every bullet position and remove the ones that are out of the screen
             for bullet in bullet_list:
                 bullet.update()
 
-            # update all the sprites
-            all.update()
+            item: Item
+            for item in items:
+                item.move()
+                if player.rect.colliderect(item):
+                    player.add_item(item)
+                    item.kill()
+
+
+            # Update player's items
+            player.update_item_list()
 
             if self.LEVEL < self.nextLevel(points):
                 self.LEVEL = self.nextLevel(points)
@@ -285,6 +304,7 @@ class Game:
                         enemies.remove(enemy)
                 flag_collision = enemy.rect.colliderect(player)
 
+                bullet: Bullet
                 for bullet in bullet_list:
                     if enemy.rect.colliderect(bullet):
                         if isinstance(enemy, Boss.Boss):
@@ -307,6 +327,12 @@ class Game:
                                 explosion_list.add(Explosion(enemy))
                                 # Points from the Alien == Alien.health
                                 player.set_kill_count(player.get_kill_count() + enemy.get_points())
+
+                                # Spawn Item
+                                if random.choices([True, False], cum_weights=(1, 20), k=1)[0]:
+                                    print('Item spawned')
+                                    items.add(ItemFactory.build(level=self.LEVEL,enemy=enemy))
+
                                 enemy.kill()
                             else:
                                 # if the enemy IS DEAD, the enemy explodes

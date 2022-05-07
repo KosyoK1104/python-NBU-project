@@ -2,8 +2,8 @@ import random
 
 import pygame as pg
 
-from Enemy import Enemy
 import Game
+from Enemy import Enemy
 
 
 class Alien(Enemy):
@@ -56,10 +56,9 @@ class Alien(Enemy):
         self.rect.y += 1
 
         # if the aliens reach the bottom of the screen, they teleport back to the top
+        # KosyoK: That's clever!
         if self.rect.y > Game.Game.SIZE[1]:
             self.rect.center = random.randint(0, Game.Game.SIZE[0]), -self.ALIEN_DIMENSIONS[1]
-            # print("ALIEN REACHED THE BOTTOM")
-            # print("alien position: " + str(self.rect.center))
 
     def kill(self) -> None:
         pg.sprite.Sprite.kill(self)
