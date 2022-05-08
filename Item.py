@@ -34,7 +34,7 @@ class Item(pg.sprite.Sprite):
 
         if self.time_counter == 0:
             self.kill()
-            return -1
+            return True
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)

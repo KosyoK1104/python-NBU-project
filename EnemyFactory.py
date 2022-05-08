@@ -1,15 +1,12 @@
 import json
 import random
-import pprint
-
-from Alien import Alien
 from Boss import Boss
 from Enemy import Enemy
 from GameConstraintViolationException import GameConstraintViolationException
+from SAlien import SAlien
 
 
 class EnemyFactory:
-    # generate enemy from json file?
     ALIEN = 1
     BOSS = 2
 
@@ -24,8 +21,9 @@ class EnemyFactory:
         else:
             alien_level = 1
         if enemy_type == 1:
-            return Alien(random.choice(list(filter(lambda el: el['level'] == alien_level, alien_data['data'])))[
-                'sprite'], alien_level)
+            # movement_type = random.choices() # Weigth
+            return SAlien(random.choice(list(filter(lambda el: el['level'] == alien_level, alien_data['data'])))[
+                              'sprite'], alien_level)
         if enemy_type == 2:
             return Boss(level)
 

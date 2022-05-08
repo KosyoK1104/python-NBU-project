@@ -18,5 +18,5 @@ class ItemFactory:
             item['base_damage'],
             item['bullet_speed'],
             level,
-            item['time_counter']
+            item['item_cooldown']
         )
