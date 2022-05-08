@@ -1,5 +1,6 @@
 import json
 import random
+import pprint
 
 from Alien import Alien
 from Boss import Boss
@@ -23,7 +24,7 @@ class EnemyFactory:
         else:
             alien_level = 1
         if enemy_type == 1:
-            return Alien(random.choice(alien_data['data'][str(alien_level)])['sprite'], alien_level)
+            return Alien(random.choice(list(filter(lambda el: el['level'] == alien_level, alien_data['data'])))['sprite'], alien_level)
         if enemy_type == 2:
             return Boss(level)
 

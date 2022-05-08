@@ -1,86 +1,125 @@
 {
   "type": "AlienData",
   "version": "1.0.0",
-  "data": {
-    "1": [
-      {
-        "sprite": "data/sprites/Ship/ship (1).png"
-      },
-      {
-        "sprite": "data/sprites/Ship/ship (2).png"
-      },
-      {
-        "sprite": "data/sprites/Ship/ship (3).png"
-      }
-    ],
-    "2": [
-      {
-        "sprite": "data/sprites/Ship/ship (4).png"
-      },
-      {
-        "sprite": "data/sprites/Ship/ship (5).png"
-      },
-      {
-        "sprite": "data/sprites/Ship/ship (6).png"
-      }
-    ],
-    "3": [
-      {
-        "sprite": "data/sprites/Ship/ship (7).png"
-      },
-      {
-        "sprite": "data/sprites/Ship/ship (8).png"
-      }
-    ],
-    "4": [
-      {
-        "sprite": "data/sprites/Ship/ship (9).png"
-      },
-      {
-        "sprite": "data/sprites/Ship/ship (10).png"
-      },
-      {
-        "sprite": "data/sprites/Ship/ship (11).png"
-      }
-    ],
-    "5": [
-      {
-        "sprite": "data/sprites/Ship/ship (12).png"
-      },
-      {
-        "sprite": "data/sprites/Ship/ship (13).png"
-      },
-      {
-        "sprite": "data/sprites/Ship/ship (14).png"
-      }
-    ],
-    "6": [
-      {
-        "sprite": "data/sprites/Ship/ship (15).png"
-      },
-      {
-        "sprite": "data/sprites/Ship/ship (16).png"
-      }
-    ],
-    "7": [
-      {
-        "sprite": "data/sprites/F5S1.png"
-      }
-    ],
-    "8": [
-      {
-        "sprite": "data/sprites/F5S2.png"
-      }
-    ],
-    "9": [
-      {
-        "sprite": "data/sprites/F5S3.png"
-      }
-    ],
-    "10": [
-      {
-        "sprite": "data/sprites/F5S4.png"
-      }
-    ]
-  }
+  "data": [
+    {
+      "level": 1,
+      "sprite": "data/sprites/Ship/ship (1).png",
+      "shoot_type": "bullet",
+      "can_teleport": true,
+      "able_to_dodge": false
+    },
+    {
+      "level": 1,
+      "sprite": "data/sprites/Ship/ship (2).png",
+      "shoot_type": "bullet",
+      "can_teleport": true,
+      "able_to_dodge": false
+    },
+    {
+      "level": 1,
+      "sprite": "data/sprites/Ship/ship (3).png",
+      "shoot_type": "bullet",
+      "can_teleport": true,
+      "able_to_dodge": false
+    },
+    {
+      "level": 3,
+      "sprite": "data/sprites/Ship/ship (7).png",
+      "shoot_type": "bullet",
+      "can_teleport": true,
+      "able_to_dodge": false
+    },
+    {
+      "level": 3,
+      "sprite": "data/sprites/Ship/ship (8).png",
+      "shoot_type": "bullet",
+      "can_teleport": true,
+      "able_to_dodge": false
+    },
+    {
+      "level": 4,
+      "sprite": "data/sprites/Ship/ship (9).png",
+      "shoot_type": "bullet",
+      "can_teleport": true,
+      "able_to_dodge": false
+    },
+    {
+      "level": 4,
+      "sprite": "data/sprites/Ship/ship (10).png",
+      "shoot_type": "bullet",
+      "can_teleport": true,
+      "able_to_dodge": false
+    },
+    {
+      "level": 4,
+      "sprite": "data/sprites/Ship/ship (11).png",
+      "shoot_type": "bullet",
+      "can_teleport": true,
+      "able_to_dodge": false
+    },
+    {
+      "level": 5,
+      "sprite": "data/sprites/Ship/ship (12).png",
+      "shoot_type": "bullet",
+      "can_teleport": true,
+      "able_to_dodge": false
+    },
+    {
+      "level": 5,
+      "sprite": "data/sprites/Ship/ship (13).png",
+      "shoot_type": "bullet",
+      "can_teleport": true,
+      "able_to_dodge": false
+    },
+    {
+      "level": 5,
+      "sprite": "data/sprites/Ship/ship (14).png",
+      "shoot_type": "bullet",
+      "can_teleport": true,
+      "able_to_dodge": false
+    },
+    {
+      "level": 6,
+      "sprite": "data/sprites/Ship/ship (15).png",
+      "shoot_type": "bullet",
+      "can_teleport": true,
+      "able_to_dodge": false
+    },
+    {
+      "level": 6,
+      "sprite": "data/sprites/Ship/ship (16).png",
+      "shoot_type": "bullet",
+      "can_teleport": true,
+      "able_to_dodge": false
+    },
+    {
+      "level": 7,
+      "sprite": "data/sprites/F5S1.png",
+      "shoot_type": "bullet",
+      "can_teleport": true,
+      "able_to_dodge": false
+    },
+    {
+      "level": 8,
+      "sprite": "data/sprites/F5S2.png",
+      "shoot_type": "bullet",
+      "can_teleport": true,
+      "able_to_dodge": false
+    },
+    {
+      "sprite": "data/sprites/F5S3.png",
+      "level": 9,
+      "shoot_type": "bullet",
+      "can_teleport": true,
+      "able_to_dodge": false
+    },
+    {
+      "level": 10,
+      "sprite": "data/sprites/F5S4.png",
+      "shoot_type": "bullet",
+      "can_teleport": true,
+      "able_to_dodge": false
+    }
+  ]
 }
