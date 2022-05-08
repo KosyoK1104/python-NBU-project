@@ -24,6 +24,27 @@
       "able_to_dodge": false
     },
     {
+      "level": 2,
+      "sprite": "data/sprites/Ship/ship (4).png",
+      "shoot_type": "bullet",
+      "can_teleport": true,
+      "able_to_dodge": false
+    },
+    {
+      "level": 2,
+      "sprite": "data/sprites/Ship/ship (5).png",
+      "shoot_type": "bullet",
+      "can_teleport": true,
+      "able_to_dodge": false
+    },
+    {
+      "level": 2,
+      "sprite": "data/sprites/Ship/ship (6).png",
+      "shoot_type": "bullet",
+      "can_teleport": true,
+      "able_to_dodge": false
+    },
+    {
       "level": 3,
       "sprite": "data/sprites/Ship/ship (7).png",
       "shoot_type": "bullet",

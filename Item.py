@@ -1,6 +1,7 @@
 import pygame as pg
 
 import Game
+from ImageNotLoaded import ImageNotLoadedException
 
 
 class Item(pg.sprite.Sprite):
@@ -8,16 +9,19 @@ class Item(pg.sprite.Sprite):
     SPAWN_ODDS = 200
 
     def __init__(self, enemy_x, enemy_y, sprite, base_damage, bullet_speed, level, time_counter):
-        pg.sprite.Sprite.__init__(self)
-        self.image = pg.image.load(sprite)
-        self.image = pg.transform.scale(self.image, (Item.ITEM_DIMENSIONS[0], Item.ITEM_DIMENSIONS[1]))
-        self.rect = self.image.get_rect()
-        self.rect.x = enemy_x
-        self.rect.y = enemy_y
-        self.time_counter = time_counter
-        self.level = level
-        self.base_damage = base_damage
-        self.bullet_speed = bullet_speed
+        try:
+            pg.sprite.Sprite.__init__(self)
+            self.image = pg.image.load(sprite)
+            self.image = pg.transform.scale(self.image, (Item.ITEM_DIMENSIONS[0], Item.ITEM_DIMENSIONS[1]))
+            self.rect = self.image.get_rect()
+            self.rect.x = enemy_x
+            self.rect.y = enemy_y
+            self.time_counter = time_counter
+            self.level = level
+            self.base_damage = base_damage
+            self.bullet_speed = bullet_speed
+        except:
+            ImageNotLoadedException.image_not_loaded(self.__class__.__name__)
 
     def move(self):
         self.rect.y += 1

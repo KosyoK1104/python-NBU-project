@@ -4,6 +4,7 @@ import pygame as pg
 
 import Game
 from Enemy import Enemy
+from ImageNotLoaded import ImageNotLoadedException
 
 
 class Alien(Enemy):
@@ -12,16 +13,19 @@ class Alien(Enemy):
     ALIEN_DIMENSIONS = Width, Height = 80, 80
 
     def __init__(self, sprite, level):
-        Enemy.__init__(self)
-        self.image = pg.image.load(sprite)
-        self.image = pg.transform.scale(self.image, (self.ALIEN_DIMENSIONS[0], self.ALIEN_DIMENSIONS[1]))
-        self.rect = self.image.get_rect()
-        self.rect.x = random.randint(0, 720)
-        self.rect.y = 0
-        self.horizontal_movement = 60
-        self.direction = random.choice(['left', 'right'])
-        self.health = level*10
-        self.points = self.health
+        try:
+            Enemy.__init__(self)
+            self.image = pg.image.load(sprite)
+            self.image = pg.transform.scale(self.image, (self.ALIEN_DIMENSIONS[0], self.ALIEN_DIMENSIONS[1]))
+            self.rect = self.image.get_rect()
+            self.rect.x = random.randint(0, 720)
+            self.rect.y = 0
+            self.horizontal_movement = 60
+            self.direction = random.choice(['left', 'right'])
+            self.health = level*10
+            self.points = self.health
+        except pg.error:
+            raise ImageNotLoadedException.image_not_loaded(self.__class__.__name__)
 
     @staticmethod
     def decrease(self):

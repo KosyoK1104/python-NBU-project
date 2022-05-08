@@ -13,6 +13,7 @@ from Background import Background
 from Bullet import Bullet
 from Enemy import Enemy
 from EnemyFactory import EnemyFactory
+from ImageNotLoaded import ImageNotLoadedException
 from ItemFactory import ItemFactory
 from Explosion import Explosion
 from Healthbar import Healthbar
@@ -201,181 +202,184 @@ class Game:
 
         # Game loop
         while 1:
-            points = player.kill_count + math.ceil(time.time()) - time_points
-            # Event handling for EXIT
-            self.exit_game()
-            # Stars background animation
-            screen.fill(self.background.BACKGROUND_COLOR)
-            screen.blit(self.background.getRandomBackground(), (0, 0))
-            starColor = pg.Surface(screen.get_size())
-            starColor = starColor.convert()
-            starColor.fill((0, 0, 0))
+            try:
+                points = player.kill_count + math.ceil(time.time()) - time_points
+                # Event handling for EXIT
+                self.exit_game()
+                # Stars background animation
+                screen.fill(self.background.BACKGROUND_COLOR)
+                screen.blit(self.background.getRandomBackground(), (0, 0))
+                starColor = pg.Surface(screen.get_size())
+                starColor = starColor.convert()
+                starColor.fill((0, 0, 0))
 
-            # Draw stars
-            for star in stars:
-                pg.draw.line(starColor,
-                             (255, 255, 255), (star[0], star[1]), (star[0], star[1]))
-                star[1] = star[1] + 1
+                # Draw stars
+                for star in stars:
+                    pg.draw.line(starColor,
+                                 (255, 255, 255), (star[0], star[1]), (star[0], star[1]))
+                    star[1] = star[1] + 1
 
-                # if the star is out of the screen, we put it back to the top
-                if star[1] > self.SIZE[1]:
-                    star[0] = random.randint(0, self.SIZE[0])
-                    star[1] = 0
+                    # if the star is out of the screen, we put it back to the top
+                    if star[1] > self.SIZE[1]:
+                        star[0] = random.randint(0, self.SIZE[0])
+                        star[1] = 0
 
-            screen.blit(starColor, (0, 0))
-            all.clear(screen, starColor)
+                screen.blit(starColor, (0, 0))
+                all.clear(screen, starColor)
 
-            # DRAW the players (for now only one)
-            player.draw(screen)
+                # DRAW the players (for now only one)
+                player.draw(screen)
 
-            # Update the healthbar
-            healthbar.update(player)
+                # Update the healthbar
+                healthbar.update(player)
 
-            # DRAW healthbar
-            healthbar.draw(screen)
+                # DRAW healthbar
+                healthbar.draw(screen)
 
-            # Draw Aliens
-            enemies.draw(screen)
+                # Draw Aliens
+                enemies.draw(screen)
 
-            # Draw items
-            items.draw(screen)
+                # Draw items
+                items.draw(screen)
 
-            # listens to the events and passes them to the player event handler
-            keys = pg.key.get_pressed()
-            player.event_handler(keys)
+                # listens to the events and passes them to the player event handler
+                keys = pg.key.get_pressed()
+                player.event_handler(keys)
 
-            # listens for the player to shoot < - THIS WORKS BUT NOT CONTROLLABLE
-            if keys[pg.K_SPACE]:
-                if flag_key_up:
-                    fired_bullet = player.shoot()
-                    bullet_list.add(fired_bullet)
-                    flag_key_up = False
-            # if the player stops shooting, we set the flag to true
-            else:
-                flag_key_up = True
+                # listens for the player to shoot < - THIS WORKS BUT NOT CONTROLLABLE
+                if keys[pg.K_SPACE]:
+                    if flag_key_up:
+                        fired_bullet = player.shoot()
+                        bullet_list.add(fired_bullet)
+                        flag_key_up = False
+                # if the player stops shooting, we set the flag to true
+                else:
+                    flag_key_up = True
 
-            # DRAW the bullets
-            bullet_list.draw(screen)
+                # DRAW the bullets
+                bullet_list.draw(screen)
 
-            # DRAW the explosions
-            explosion_list.draw(screen)
+                # DRAW the explosions
+                explosion_list.draw(screen)
 
-            # update all the sprites
-            all.update()
+                # update all the sprites
+                all.update()
 
-            # Increment every bullet position and remove the ones that are out of the screen
-            for bullet in bullet_list:
-                bullet.update()
-
-            item: Item
-            for item in items:
-                item.move()
-                if player.rect.colliderect(item):
-                    player.add_item(item)
-                    item.kill()
-
-            # Update player's items
-            player.update_item_list()
-
-            if self.LEVEL < self.nextLevel(points):
-                self.LEVEL = self.nextLevel(points)
-                enemies.add(EnemyFactory.build(EnemyFactory.BOSS, self.LEVEL))
-
-            # Spawn new Enemies
-            if not Game.isBossAlive:
-                if enemy_reload:
-                    enemy_reload = enemy_reload - 1
-                elif not int(random.random() * Alien.ODDS):
-                    enemies.add(EnemyFactory.build(EnemyFactory.ALIEN, self.LEVEL))
-                    enemy_reload = Alien.ALIEN_LOAD_TIME
-
-            # Type hinted Enemy
-            enemy: Enemy
-            for enemy in enemies:
-                enemy.move()
-
-                # Check for collisions between the player and the enemies
-                if enemy.rect.colliderect(player) and not flag_collision:
-                    player.health -= 1
-                    enemy.health -= player.DAMAGE  # Here must be a player damage
-                    explosion_list.add(Explosion(enemy))
-                    if enemy.health <= 0:
-                        enemies.remove(enemy)
-                flag_collision = enemy.rect.colliderect(player)
-
-                bullet: Bullet
+                # Increment every bullet position and remove the ones that are out of the screen
                 for bullet in bullet_list:
-                    if enemy.rect.colliderect(bullet):
-                        if isinstance(enemy, Boss.Boss):
-                            enemy: Boss.Boss
-                            enemy.health -= bullet.get_damage()  # Here must be a bullet damage
-                            # if the boss is NOT DEAD bullets explode
-                            explosion_list.add(Explosion(bullet))
-                            bullet.kill()
+                    bullet.update()
 
-                            # if the boss IS DEAD, the Boss explodes
-                            if enemy.health <= 0:
-                                explosion_list.add(Explosion(enemy))
-                                enemy.kill()
-                                # Points from the Boss
-                                player.set_kill_count(player.get_kill_count() + (self.LEVEL * pow(2, self.LEVEL)))
-                        else:
-                            enemy.health -= bullet.get_damage()  # Here must be a bullet damage
-                            # if the enemy is NOT DEAD bullets explode
-                            if enemy.health <= 0:
-                                explosion_list.add(Explosion(enemy))
-                                # Points from the Alien == Alien.health
-                                player.set_kill_count(player.get_kill_count() + enemy.get_points())
+                item: Item
+                for item in items:
+                    item.move()
+                    if player.rect.colliderect(item):
+                        player.add_item(item)
+                        item.kill()
 
-                                # Spawn Item
-                                if random.choices([True, False], cum_weights=(1, 20), k=1)[0]:
-                                    print('Item spawned')
-                                    items.add(ItemFactory.build(level=self.LEVEL, enemy=enemy))
+                # Update player's items
+                player.update_item_list()
 
-                                enemy.kill()
-                            else:
-                                # if the enemy IS DEAD, the enemy explodes
+                if self.LEVEL < self.nextLevel(points):
+                    self.LEVEL = self.nextLevel(points)
+                    enemies.add(EnemyFactory.build(EnemyFactory.BOSS, self.LEVEL))
+
+                # Spawn new Enemies
+                if not Game.isBossAlive:
+                    if enemy_reload:
+                        enemy_reload = enemy_reload - 1
+                    elif not int(random.random() * Alien.ODDS):
+                        enemies.add(EnemyFactory.build(EnemyFactory.ALIEN, self.LEVEL))
+                        enemy_reload = Alien.ALIEN_LOAD_TIME
+
+                # Type hinted Enemy
+                enemy: Enemy
+                for enemy in enemies:
+                    enemy.move()
+
+                    # Check for collisions between the player and the enemies
+                    if enemy.rect.colliderect(player) and not flag_collision:
+                        player.health -= 1
+                        enemy.health -= player.DAMAGE  # Here must be a player damage
+                        explosion_list.add(Explosion(enemy))
+                        if enemy.health <= 0:
+                            enemies.remove(enemy)
+                    flag_collision = enemy.rect.colliderect(player)
+
+                    bullet: Bullet
+                    for bullet in bullet_list:
+                        if enemy.rect.colliderect(bullet):
+                            if isinstance(enemy, Boss.Boss):
+                                enemy: Boss.Boss
+                                enemy.health -= bullet.get_damage()  # Here must be a bullet damage
+                                # if the boss is NOT DEAD bullets explode
                                 explosion_list.add(Explosion(bullet))
-                            bullet_list.remove(bullet)
+                                bullet.kill()
 
-            # if player is DEAD start new game
-            if player.health <= 0:
-                explosion_list.add(Explosion(player))
-                score = Score(self.PLAYER_NAME, player.kill_count + math.ceil(time.time()) - time_points)
-                score.save()
-                # GAME OVER ANIMATION
-                self.game_over_screen()
-                break
+                                # if the boss IS DEAD, the Boss explodes
+                                if enemy.health <= 0:
+                                    explosion_list.add(Explosion(enemy))
+                                    enemy.kill()
+                                    # Points from the Boss
+                                    player.set_kill_count(player.get_kill_count() + (self.LEVEL * pow(2, self.LEVEL)))
+                            else:
+                                enemy.health -= bullet.get_damage()  # Here must be a bullet damage
+                                # if the enemy is NOT DEAD bullets explode
+                                if enemy.health <= 0:
+                                    explosion_list.add(Explosion(enemy))
+                                    # Points from the Alien == Alien.health
+                                    player.set_kill_count(player.get_kill_count() + enemy.get_points())
 
-            # update every explosion
-            for explosions in explosion_list:
-                explosions.update()
+                                    # Spawn Item
+                                    if random.choices([True, False], cum_weights=(1, 20), k=1)[0]:
+                                        items.add(ItemFactory.build(level=self.LEVEL, enemy=enemy))
 
-            # Render POINTS on the screen
-            font.render_to(screen, (5, 30), "Points: " + str(points),
-                           (255, 255, 255))
+                                    enemy.kill()
+                                else:
+                                    # if the enemy IS DEAD, the enemy explodes
+                                    explosion_list.add(Explosion(bullet))
+                                bullet_list.remove(bullet)
 
-            # Render LEVEL on the screen
-            font.render_to(screen, (0, 520), 'Level: ' + str(self.LEVEL), (255, 255, 255))
-            font.render_to(screen, (0, 580), 'Attack Damage: ' + str(player.attack_damage), (255, 255, 255))
-            font.render_to(screen, (0, 550), 'Bullet Speed: ' + str(player.BULLET_SPEED), (255, 255, 255))
+                # if player is DEAD start new game
+                if player.health <= 0:
+                    explosion_list.add(Explosion(player))
+                    score = Score(self.PLAYER_NAME, player.kill_count + math.ceil(time.time()) - time_points)
+                    score.save()
+                    # GAME OVER ANIMATION
+                    self.game_over_screen()
+                    break
 
-            # Item bar
-            item_pos_x = 555
-            item_pos_y = 755
-            for item in player.item_list:
-                screen.blit(item.image, (item_pos_y, item_pos_x))
-                item_pos_x -= 45
-                if item_pos_x <= 10:
-                    item_pos_y -= 45
-                    item_pos_x = 555
+                # update every explosion
+                for explosions in explosion_list:
+                    explosions.update()
 
-            # Shows FPS in the title bar
-            clock.tick(60)
-            pg.display.set_caption(str("FPS: {}".format(clock.get_fps())))
+                # Render POINTS on the screen
+                font.render_to(screen, (5, 30), "Points: " + str(points),
+                               (255, 255, 255))
 
-            dirty = all.draw(screen)
-            pg.display.update(dirty)
-            pg.display.flip()
+                # Render LEVEL on the screen
+                font.render_to(screen, (0, 520), 'Level: ' + str(self.LEVEL), (255, 255, 255))
+                font.render_to(screen, (0, 580), 'Attack Damage: ' + str(player.attack_damage), (255, 255, 255))
+                font.render_to(screen, (0, 550), 'Bullet Speed: ' + str(player.BULLET_SPEED), (255, 255, 255))
+
+                # Item bar
+                item_pos_x = 555
+                item_pos_y = 755
+                for item in player.item_list:
+                    screen.blit(item.image, (item_pos_y, item_pos_x))
+                    item_pos_x -= 45
+                    if item_pos_x <= 10:
+                        item_pos_y -= 45
+                        item_pos_x = 555
+
+                # Shows FPS in the title bar
+                clock.tick(60)
+                pg.display.set_caption(str("FPS: {}".format(clock.get_fps())))
+
+                dirty = all.draw(screen)
+                pg.display.update(dirty)
+                pg.display.flip()
+
+            except ImageNotLoadedException as e:
+                print(e)
 
         self.initialize(self.scoreboard())

@@ -4,6 +4,7 @@ import pygame as pg
 
 import Game
 from Enemy import Enemy
+from ImageNotLoaded import ImageNotLoadedException
 
 
 class Boss(Enemy):
@@ -11,18 +12,22 @@ class Boss(Enemy):
     BOSS_HEALTH = 100
 
     def __init__(self, level):
-        Enemy.__init__(self)
-        self.image = pg.image.load('data/sprites/alien_boss.gif')
-        self.image = pg.transform.scale(self.image, (self.BOSS_DIMENSIONS[0], self.BOSS_DIMENSIONS[1]))
-        self.rect = self.image.get_rect()
-        self.rect.x = Game.Game.SIZE[0] / 2
-        self.rect.y = 0
-        self.horizontal_movement = 10
-        self.direction = random.choice(['left', 'right'])
-        self.health = Boss.BOSS_HEALTH * (pow(2, level))
+        try:
+            Enemy.__init__(self)
+            self.image = pg.image.load('data/sprites/alien_boss.gif')
+            self.image = pg.transform.scale(self.image, (self.BOSS_DIMENSIONS[0], self.BOSS_DIMENSIONS[1]))
+            self.rect = self.image.get_rect()
+            self.rect.x = Game.Game.SIZE[0] / 2
+            self.rect.y = 0
+            self.horizontal_movement = 10
+            self.direction = random.choice(['left', 'right'])
+            self.health = Boss.BOSS_HEALTH * (pow(2, level))
+            Game.Game.isBossAlive = True
+        except:
+            raise ImageNotLoadedException.image_not_loaded(self.__class__.__name__)
+
         # print("Boss level {} health: ".format(level) + str(self.health))
 
-        Game.Game.isBossAlive = True
 
     def move(self):
         if self.BOSS_DIMENSIONS[0] == self.rect.x:
