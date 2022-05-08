@@ -2,7 +2,9 @@
 ###
 
 ### Install packages 
-`pip install -r requirements.txt`
+```shell
+pip install -r requirements.txt
+```
 ### Packages
 - https://pygame-menu.readthedocs.io/en/4.2.7/
 
@@ -16,8 +18,24 @@
 
 ## Make an executable file
 Run:
-`pyinstaller main.py --name NAME --noconsole -i File.ico`
+```shell
+pyinstaller main.py --name NAME --noconsole -i File.ico
+```
 
+## Folder Structure
+```
+├──data                         # Game Files
+│   ├──Explosion                # Explosion animation
+│   ├──GAME_OVER_SCREEN         # Game Over screen animation
+│   ├──Gif_Animation            # To be deleted?
+│   ├──Healthbar                # Healthbar images
+│   ├──Laser Sprites            # Laser sprite images
+│   ├──sprites                  # Sprites
+│   │    ├──items               # Items sprites
+│   │    ├──Ship                # Ship sprites
+├──src                          # Code files
+├──venv                         # Python venv folder
+```
 [comment]: <> (## TODO)
 
 [comment]: <> (- [ ] Menu flow)
