@@ -1,7 +1,7 @@
 import json
 import random
 
-from src.Enemy import Enemy
+from Enemy import Enemy
 from Item import Item
 
 
