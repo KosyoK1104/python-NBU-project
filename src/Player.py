@@ -56,6 +56,8 @@ class Player(pg.sprite.Sprite):
     def add_item(self, item: Item.Item):
         self.item_list.append(item)
         self.attack_damage += item.get_damage()
+        if self.attack_damage <= 0:
+            self.attack_damage = 1
         self.BULLET_SPEED += item.bullet_speed
 
     def update_item_list(self):

@@ -7,8 +7,6 @@ class Enemy(pg.sprite.Sprite):
     def __init__(self):
         pg.sprite.Sprite.__init__(self)
         self.health = None
-        # self.rect.x = None
-        # self.rect.y = None
 
     def kill(self) -> None:
         pass

@@ -7,7 +7,7 @@ import pygame as pg
 import pygame.freetype as freetype
 import pygame_menu
 
-import Boss
+from Boss import Boss
 from Alien import Alien
 from Background import Background
 from Bullet import Bullet
@@ -308,8 +308,8 @@ class Game:
                     bullet: Bullet
                     for bullet in bullet_list:
                         if enemy.rect.colliderect(bullet):
-                            if isinstance(enemy, Boss.Boss):
-                                enemy: Boss.Boss
+                            if isinstance(enemy, Boss):
+                                enemy:  Boss
                                 enemy.health -= bullet.get_damage()  # Here must be a bullet damage
                                 # if the boss is NOT DEAD bullets explode
                                 explosion_list.add(Explosion(bullet))
