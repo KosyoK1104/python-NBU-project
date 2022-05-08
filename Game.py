@@ -274,7 +274,6 @@ class Game:
                     player.add_item(item)
                     item.kill()
 
-
             # Update player's items
             player.update_item_list()
 
@@ -295,7 +294,7 @@ class Game:
             for enemy in enemies:
                 enemy.move()
 
-            # Check for collisions between the player and the enemies
+                # Check for collisions between the player and the enemies
                 if enemy.rect.colliderect(player) and not flag_collision:
                     player.health -= 1
                     enemy.health -= player.DAMAGE  # Here must be a player damage
@@ -331,7 +330,7 @@ class Game:
                                 # Spawn Item
                                 if random.choices([True, False], cum_weights=(1, 20), k=1)[0]:
                                     print('Item spawned')
-                                    items.add(ItemFactory.build(level=self.LEVEL,enemy=enemy))
+                                    items.add(ItemFactory.build(level=self.LEVEL, enemy=enemy))
 
                                 enemy.kill()
                             else:
@@ -357,8 +356,19 @@ class Game:
                            (255, 255, 255))
 
             # Render LEVEL on the screen
-            font.render_to(screen, (400, 300), 'Level' + str(self.LEVEL), (255, 255, 255))
-            font.render_to(screen, (100, 300), 'Level' + str(player.attack_damage), (255, 255, 255))
+            font.render_to(screen, (0, 520), 'Level: ' + str(self.LEVEL), (255, 255, 255))
+            font.render_to(screen, (0, 580), 'Attack Damage: ' + str(player.attack_damage), (255, 255, 255))
+            font.render_to(screen, (0, 550), 'Bullet Speed: ' + str(player.BULLET_SPEED), (255, 255, 255))
+
+            # Item bar
+            item_pos_x = 555
+            item_pos_y = 755
+            for item in player.item_list:
+                screen.blit(item.image, (item_pos_y, item_pos_x))
+                item_pos_x -= 45
+                if item_pos_x <= 10:
+                    item_pos_y -= 45
+                    item_pos_x = 555
 
             # Shows FPS in the title bar
             clock.tick(60)
