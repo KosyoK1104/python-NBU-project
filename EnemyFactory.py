@@ -2,7 +2,7 @@ import json
 import random
 from Boss import Boss
 from Enemy import Enemy
-from GameConstraintViolationException import GameConstraintViolationException
+from exceptions.GameConstraintViolationException import GameConstraintViolationException
 from SAlien import SAlien
 
 

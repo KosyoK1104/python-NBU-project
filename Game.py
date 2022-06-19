@@ -13,7 +13,7 @@ from Background import Background
 from Bullet import Bullet
 from Enemy import Enemy
 from EnemyFactory import EnemyFactory
-from ImageNotLoaded import ImageNotLoadedException
+from exceptions.ImageNotLoaded import ImageNotLoadedException
 from ItemFactory import ItemFactory
 from Explosion import Explosion
 from Healthbar import Healthbar
@@ -133,7 +133,6 @@ class Game:
             screen.blit(image_animation, (0, 0))
             pg.display.update()
             clock.tick(30)
-            pg.display.set_caption(str("FPS: {}".format(clock.get_fps())))
             self.exit_game()
 
     def game_over_screen(self):
@@ -143,7 +142,6 @@ class Game:
             screen.blit(image_animation, (0, 0))
             pg.display.update()
             clock.tick(30)
-            pg.display.set_caption(str("FPS: {}".format(clock.get_fps())))
             self.exit_game()
 
     def nextLevel(self, points):
@@ -156,7 +154,7 @@ class Game:
         menu.disable()
 
         # intro animation
-        # self.intro()
+        self.intro()
 
         enemies = pg.sprite.Group()
         all = pg.sprite.RenderUpdates()
@@ -309,7 +307,7 @@ class Game:
                     for bullet in bullet_list:
                         if enemy.rect.colliderect(bullet):
                             if isinstance(enemy, Boss):
-                                enemy:  Boss
+                                enemy: Boss
                                 enemy.health -= bullet.get_damage()  # Here must be a bullet damage
                                 # if the boss is NOT DEAD bullets explode
                                 explosion_list.add(Explosion(bullet))
@@ -348,6 +346,13 @@ class Game:
                     self.game_over_screen()
                     break
 
+                if self.LEVEL == 10:
+                    score = Score(self.PLAYER_NAME, player.kill_count + math.ceil(time.time()) - time_points)
+                    score.save()
+                    # GAME OVER ANIMATION
+                    self.game_over_screen() # YOU WIN!
+                    break
+
                 # update every explosion
                 for explosions in explosion_list:
                     explosions.update()
@@ -373,7 +378,6 @@ class Game:
 
                 # Shows FPS in the title bar
                 clock.tick(60)
-                pg.display.set_caption(str("FPS: {}".format(clock.get_fps())))
 
                 dirty = all.draw(screen)
                 pg.display.update(dirty)

@@ -1,6 +1,6 @@
 import pygame as pg
 
-from ImageNotLoaded import ImageNotLoadedException
+from exceptions.ImageNotLoaded import ImageNotLoadedException
 
 
 class Explosion(pg.sprite.Sprite):
@@ -16,8 +16,8 @@ class Explosion(pg.sprite.Sprite):
             self.rect = self.image.get_rect()
             self.rect.center = obj.rect.center
             self.frame = 26
-        except:
-            ImageNotLoadedException.image_not_loaded(self.__class__.__name__)
+        except pg.error:
+            raise ImageNotLoadedException.image_not_loaded(self.__class__.__name__)
 
     def update(self) -> None:
         try:
@@ -27,5 +27,5 @@ class Explosion(pg.sprite.Sprite):
                 self.frame += 1
             else:
                 self.kill()
-        except:
-            ImageNotLoadedException.image_not_loaded(self.__class__.__name__)
+        except pg.error:
+            raise ImageNotLoadedException.image_not_loaded(self.__class__.__name__)

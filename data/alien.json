@@ -4,112 +4,112 @@
   "data": [
     {
       "level": 1,
-      "sprite": "data/sprites/Ship/ship (1).png",
+      "sprite": "data/sprites/aliens/ship (1).png",
       "shoot_type": "bullet",
       "can_teleport": true,
       "able_to_dodge": false
     },
     {
       "level": 1,
-      "sprite": "data/sprites/Ship/ship (2).png",
+      "sprite": "data/sprites/aliens/ship (2).png",
       "shoot_type": "bullet",
       "can_teleport": true,
       "able_to_dodge": false
     },
     {
       "level": 1,
-      "sprite": "data/sprites/Ship/ship (3).png",
+      "sprite": "data/sprites/aliens/ship (3).png",
       "shoot_type": "bullet",
       "can_teleport": true,
       "able_to_dodge": false
     },
     {
       "level": 2,
-      "sprite": "data/sprites/Ship/ship (4).png",
+      "sprite": "data/sprites/aliens/ship (4).png",
       "shoot_type": "bullet",
       "can_teleport": true,
       "able_to_dodge": false
     },
     {
       "level": 2,
-      "sprite": "data/sprites/Ship/ship (5).png",
+      "sprite": "data/sprites/aliens/ship (5).png",
       "shoot_type": "bullet",
       "can_teleport": true,
       "able_to_dodge": false
     },
     {
       "level": 2,
-      "sprite": "data/sprites/Ship/ship (6).png",
+      "sprite": "data/sprites/aliens/ship (6).png",
       "shoot_type": "bullet",
       "can_teleport": true,
       "able_to_dodge": false
     },
     {
       "level": 3,
-      "sprite": "data/sprites/Ship/ship (7).png",
+      "sprite": "data/sprites/aliens/ship (7).png",
       "shoot_type": "bullet",
       "can_teleport": true,
       "able_to_dodge": false
     },
     {
       "level": 3,
-      "sprite": "data/sprites/Ship/ship (8).png",
+      "sprite": "data/sprites/aliens/ship (8).png",
       "shoot_type": "bullet",
       "can_teleport": true,
       "able_to_dodge": false
     },
     {
       "level": 4,
-      "sprite": "data/sprites/Ship/ship (9).png",
+      "sprite": "data/sprites/aliens/ship (9).png",
       "shoot_type": "bullet",
       "can_teleport": true,
       "able_to_dodge": false
     },
     {
       "level": 4,
-      "sprite": "data/sprites/Ship/ship (10).png",
+      "sprite": "data/sprites/aliens/ship (10).png",
       "shoot_type": "bullet",
       "can_teleport": true,
       "able_to_dodge": false
     },
     {
       "level": 4,
-      "sprite": "data/sprites/Ship/ship (11).png",
+      "sprite": "data/sprites/aliens/ship (11).png",
       "shoot_type": "bullet",
       "can_teleport": true,
       "able_to_dodge": false
     },
     {
       "level": 5,
-      "sprite": "data/sprites/Ship/ship (12).png",
+      "sprite": "data/sprites/aliens/ship (12).png",
       "shoot_type": "bullet",
       "can_teleport": true,
       "able_to_dodge": false
     },
     {
       "level": 5,
-      "sprite": "data/sprites/Ship/ship (13).png",
+      "sprite": "data/sprites/aliens/ship (13).png",
       "shoot_type": "bullet",
       "can_teleport": true,
       "able_to_dodge": false
     },
     {
       "level": 5,
-      "sprite": "data/sprites/Ship/ship (14).png",
+      "sprite": "data/sprites/aliens/ship (14).png",
       "shoot_type": "bullet",
       "can_teleport": true,
       "able_to_dodge": false
     },
     {
       "level": 6,
-      "sprite": "data/sprites/Ship/ship (15).png",
+      "sprite": "data/sprites/aliens/ship (15).png",
       "shoot_type": "bullet",
       "can_teleport": true,
       "able_to_dodge": false
     },
     {
       "level": 6,
-      "sprite": "data/sprites/Ship/ship (16).png",
+      "sprite": "data/sprites/aliens/ship (16).png",
       "shoot_type": "bullet",
       "can_teleport": true,
       "able_to_dodge": false

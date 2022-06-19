@@ -2,9 +2,8 @@ import random
 
 import pygame as pg
 
-import Game
 from Enemy import Enemy
-from ImageNotLoaded import ImageNotLoadedException
+from exceptions.ImageNotLoaded import ImageNotLoadedException
 
 
 class Alien(Enemy):

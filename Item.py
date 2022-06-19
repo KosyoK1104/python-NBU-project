@@ -1,7 +1,7 @@
 import pygame as pg
 
 import Game
-from ImageNotLoaded import ImageNotLoadedException
+from exceptions.ImageNotLoaded import ImageNotLoadedException
 
 
 class Item(pg.sprite.Sprite):
@@ -20,8 +20,8 @@ class Item(pg.sprite.Sprite):
             self.level = level
             self.base_damage = base_damage
             self.bullet_speed = bullet_speed
-        except:
-            ImageNotLoadedException.image_not_loaded(self.__class__.__name__)
+        except pg.error:
+            raise ImageNotLoadedException.image_not_loaded(self.__class__.__name__)
 
     def move(self):
         self.rect.y += 1
