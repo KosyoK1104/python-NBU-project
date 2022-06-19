@@ -7,7 +7,7 @@ from pathlib import Path
 class Score:
     FILE_NAME = '/score.json'
     DOCUMENTS_PATH = os.path.expanduser('~/Documents')
-    DOCUMENTS_GAME_PATH = DOCUMENTS_PATH + '/PlayerVSAliens'
+    DOCUMENTS_GAME_PATH = DOCUMENTS_PATH + '/HumanVsAliens'
 
     def __init__(self, name, score):
         self.name = name
