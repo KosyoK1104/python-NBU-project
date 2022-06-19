@@ -12,7 +12,9 @@ from Alien import Alien
 from Background import Background
 from Bullet import Bullet
 from Enemy import Enemy
+from EnemyBullet import EnemyBullet
 from EnemyFactory import EnemyFactory
+from PlayerBullet import PlayerBullet
 from exceptions.ImageNotLoaded import ImageNotLoadedException
 from ItemFactory import ItemFactory
 from Explosion import Explosion
@@ -154,7 +156,7 @@ class Game:
         menu.disable()
 
         # intro animation
-        self.intro()
+        # self.intro()
 
         enemies = pg.sprite.Group()
         all = pg.sprite.RenderUpdates()
@@ -289,10 +291,22 @@ class Game:
                         enemies.add(EnemyFactory.build(EnemyFactory.ALIEN, self.LEVEL))
                         enemy_reload = Alien.ALIEN_LOAD_TIME
 
+                # Checks if a bullet hit the player
+                bullet: Bullet
+                for bullet in bullet_list:
+                    if bullet.rect.colliderect(player) and isinstance(bullet, EnemyBullet):
+                        player.health -= bullet.get_damage()
+                        explosion_list.add(Explosion(bullet))
+                        bullet.kill()
+
                 # Type hinted Enemy
                 enemy: Enemy
                 for enemy in enemies:
                     enemy.move()
+                    # there is a chance 1/5 so that the enemy shoots
+                    choice = random.choices([1, 2, 3, 4, 5, 6], weights=(1*self.LEVEL, 20, 30, 40, 50, 60), k=1)[0]
+                    if choice == 1:
+                        bullet_list.add(enemy.shoot())
 
                     # Check for collisions between the player and the enemies
                     if enemy.rect.colliderect(player) and not flag_collision:
@@ -305,7 +319,8 @@ class Game:
 
                     bullet: Bullet
                     for bullet in bullet_list:
-                        if enemy.rect.colliderect(bullet):
+                        # Checks if the bullet is fired by the player and if the bullet collided with enemy
+                        if enemy.rect.colliderect(bullet) and isinstance(bullet, PlayerBullet):
                             if isinstance(enemy, Boss):
                                 enemy: Boss
                                 enemy.health -= bullet.get_damage()  # Here must be a bullet damage
@@ -342,6 +357,7 @@ class Game:
                     explosion_list.add(Explosion(player))
                     score = Score(self.PLAYER_NAME, player.kill_count + math.ceil(time.time()) - time_points)
                     score.save()
+                    self.LEVEL = 1
                     # GAME OVER ANIMATION
                     self.game_over_screen()
                     break
@@ -349,6 +365,7 @@ class Game:
                 if self.LEVEL == 10:
                     score = Score(self.PLAYER_NAME, player.kill_count + math.ceil(time.time()) - time_points)
                     score.save()
+                    self.LEVEL = 1
                     # GAME OVER ANIMATION
                     self.game_over_screen() # YOU WIN!
                     break
@@ -357,8 +374,12 @@ class Game:
                 for explosions in explosion_list:
                     explosions.update()
 
+                # Render health of Player
+                font.render_to(screen, (5, 30), "Health: " + str(player.health),
+                               (255, 255, 255))
+
                 # Render POINTS on the screen
-                font.render_to(screen, (5, 30), "Points: " + str(points),
+                font.render_to(screen, (5, 55), "Points: " + str(points),
                                (255, 255, 255))
 
                 # Render LEVEL on the screen

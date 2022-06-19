@@ -2,7 +2,9 @@ import random
 
 import pygame as pg
 
+from Bullet import Bullet
 from Enemy import Enemy
+from EnemyBullet import EnemyBullet
 from exceptions.ImageNotLoaded import ImageNotLoadedException
 
 
@@ -23,6 +25,7 @@ class Alien(Enemy):
             self.direction = random.choice(['left', 'right'])
             self.health = level*10
             self.points = self.health
+            self.attack_damage = level
         except pg.error:
             raise ImageNotLoadedException.image_not_loaded(self.__class__.__name__)
 
@@ -45,3 +48,8 @@ class Alien(Enemy):
 
     def get_height(self):
         return self.ALIEN_DIMENSIONS[1]
+
+    def shoot(self) -> Bullet:
+        return EnemyBullet(self, Bullet.BULLET_SPEED)
+
+

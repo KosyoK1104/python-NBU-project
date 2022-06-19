@@ -3,7 +3,9 @@ import random
 import pygame as pg
 
 import Game
+from Bullet import Bullet
 from Enemy import Enemy
+from EnemyBullet import EnemyBullet
 from exceptions.ImageNotLoaded import ImageNotLoadedException
 
 
@@ -22,6 +24,7 @@ class Boss(Enemy):
             self.horizontal_movement = 10
             self.direction = random.choice(['left', 'right'])
             self.health = Boss.BOSS_HEALTH * (pow(2, level))
+            self.attack_damage = level*2
             Game.Game.isBossAlive = True
         except pg.error:
             raise ImageNotLoadedException.image_not_loaded(self.__class__.__name__)
@@ -62,3 +65,6 @@ class Boss(Enemy):
 
     def get_height(self):
         return self.BOSS_DIMENSIONS[1]
+
+    def shoot(self) -> Bullet:
+        return EnemyBullet(self, Bullet.BULLET_SPEED)

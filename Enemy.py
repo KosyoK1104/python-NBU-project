@@ -1,5 +1,7 @@
 import pygame as pg
 
+from Bullet import Bullet
+
 
 class Enemy(pg.sprite.Sprite):
     SPEED = 2.5
@@ -24,4 +26,7 @@ class Enemy(pg.sprite.Sprite):
         pass
 
     def get_width(self):
+        pass
+
+    def shoot(self) -> Bullet:
         pass

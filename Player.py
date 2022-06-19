@@ -5,6 +5,8 @@ import Game
 import Item
 from typing import List
 
+from PlayerBullet import PlayerBullet
+
 
 class Player(pg.sprite.Sprite):
     DAMAGE = 10
@@ -21,7 +23,7 @@ class Player(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = 360
         self.rect.y = 500
-        self.health = 10
+        self.health = 100
         self.attack_damage = Player.DAMAGE
         self.speed = Player.SPEED
         self.kill_count = 0
@@ -42,7 +44,7 @@ class Player(pg.sprite.Sprite):
     def shoot(self) -> Bullet.Bullet:
         # print("Bullet shot")
         # create a bullet object with name bullet
-        return Bullet.Bullet(self, self.BULLET_SPEED)
+        return PlayerBullet(self, self.BULLET_SPEED)
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)

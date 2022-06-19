@@ -1,3 +1,5 @@
+import math
+
 import pygame as pg
 
 import Game
@@ -18,7 +20,7 @@ class Healthbar(pg.sprite.Sprite):
 
     def update(self, player):
         try:
-            self.image = pg.image.load("data/sprites/healthbar/" + str(player.health) + ".png")
+            self.image = pg.image.load("data/sprites/healthbar/" + str(int(math.ceil(player.health/10))) + ".png")
             self.image = pg.transform.scale(self.image,
                                             (Healthbar.HEALTHBAR_DIMENSIONS[0], Healthbar.HEALTHBAR_DIMENSIONS[1]))
             self.rect = self.image.get_rect()
