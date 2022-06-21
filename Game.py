@@ -156,7 +156,7 @@ class Game:
         menu.disable()
 
         # intro animation
-        # self.intro()
+        self.intro()
 
         enemies = pg.sprite.Group()
         all = pg.sprite.RenderUpdates()
@@ -305,7 +305,7 @@ class Game:
                     enemy.move()
                     # there is a chance 1/5 so that the enemy shoots
                     # choice = random.choices([1, 2, 3, 4, 5, 6, 7], weights=(self.LEVEL, 20, 30, 40, 50, 60, 70), k=1)[0]
-                    choice = random.choices([True, False], cum_weights=(1, 400), k=1)[0]
+                    choice = random.choices([True, False], cum_weights=(self.LEVEL, 400), k=1)[0]
                     if choice:
                         bullet_list.add(enemy.shoot())
 
