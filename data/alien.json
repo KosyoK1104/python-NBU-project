@@ -116,20 +116,20 @@
     },
     {
       "level": 7,
-      "sprite": "data/sprites/F5S1.png",
+      "sprite": "data/sprites/aliens/F5S1.png",
       "shoot_type": "bullet",
       "can_teleport": true,
       "able_to_dodge": false
     },
     {
       "level": 8,
-      "sprite": "data/sprites/F5S2.png",
+      "sprite": "data/sprites/aliens/F5S2.png",
       "shoot_type": "bullet",
       "can_teleport": true,
       "able_to_dodge": false
     },
     {
-      "sprite": "data/sprites/F5S3.png",
+      "sprite": "data/sprites/aliens/F5S3.png",
       "level": 9,
       "shoot_type": "bullet",
       "can_teleport": true,
@@ -137,7 +137,7 @@
     },
     {
       "level": 10,
-      "sprite": "data/sprites/F5S4.png",
+      "sprite": "data/sprites/aliens/F5S4.png",
       "shoot_type": "bullet",
       "can_teleport": true,
       "able_to_dodge": false

@@ -304,8 +304,9 @@ class Game:
                 for enemy in enemies:
                     enemy.move()
                     # there is a chance 1/5 so that the enemy shoots
-                    choice = random.choices([1, 2, 3, 4, 5, 6], weights=(1*self.LEVEL, 20, 30, 40, 50, 60), k=1)[0]
-                    if choice == 1:
+                    # choice = random.choices([1, 2, 3, 4, 5, 6, 7], weights=(self.LEVEL, 20, 30, 40, 50, 60, 70), k=1)[0]
+                    choice = random.choices([True, False], cum_weights=(1, 400), k=1)[0]
+                    if choice:
                         bullet_list.add(enemy.shoot())
 
                     # Check for collisions between the player and the enemies
@@ -314,6 +315,8 @@ class Game:
                         enemy.health -= player.DAMAGE  # Here must be a player damage
                         explosion_list.add(Explosion(enemy))
                         if enemy.health <= 0:
+                            if isinstance(enemy, Boss):
+                                Game.isBossAlive = False
                             enemies.remove(enemy)
                     flag_collision = enemy.rect.colliderect(player)
 
@@ -360,11 +363,19 @@ class Game:
                     self.LEVEL = 1
                     # GAME OVER ANIMATION
                     self.game_over_screen()
+                    if Game.isBossAlive:
+                        Game.isBossAlive = False
                     break
 
                 if self.LEVEL == 10:
                     score = Score(self.PLAYER_NAME, player.kill_count + math.ceil(time.time()) - time_points)
                     score.save()
+                    # Render health of Player
+                    # time.sleep(5)
+                    font.size = 26
+                    font.render_to(screen, (Game.SIZE[0]/2, Game.SIZE[1]/2), "Player " + str(self.PLAYER_NAME)+" you won the game!",
+                                   (255, 255, 255))
+                    time.sleep(5)
                     self.LEVEL = 1
                     # GAME OVER ANIMATION
                     self.game_over_screen() # YOU WIN!

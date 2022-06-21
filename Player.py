@@ -61,6 +61,8 @@ class Player(pg.sprite.Sprite):
         if self.attack_damage <= 0:
             self.attack_damage = 1
         self.BULLET_SPEED += item.bullet_speed
+        if self.BULLET_SPEED <= 0:
+            self.BULLET_SPEED = 1
 
     def update_item_list(self):
         for item in self.item_list:
