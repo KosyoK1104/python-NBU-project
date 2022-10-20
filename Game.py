@@ -153,6 +153,7 @@ class Game:
 
     # The game
     def start_the_game(self):
+        # disables the menus
         menu.disable()
 
         # intro animation

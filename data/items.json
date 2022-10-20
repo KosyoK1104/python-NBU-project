@@ -29,7 +29,7 @@
     {
       "sprite": "data/sprites/items/UFO_PlasmaShield_Interference.png",
       "base_damage": 60,
-      "bullet_speed": -10,
+      "bullet_speed": -5,
       "item_cooldown": 2000
     },
     {
